@@ -7,387 +7,358 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#111;color:#eee;min-height:100vh;padding:20px}
-.container{max-width:1100px;margin:0 auto}
-h1{font-size:1.6rem;color:#7dd3fc;margin-bottom:4px}
-.subtitle{font-size:.85rem;color:#888;margin-bottom:20px}
-.setup-box{background:#1e1e2e;border:1px solid #333;border-radius:10px;padding:20px;margin-bottom:20px}
-.setup-box h2{font-size:1rem;color:#aaa;margin-bottom:14px}
-.form-row{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
-label{font-size:.75rem;color:#888}
-input{background:#0d0d1a;border:1px solid #444;color:#eee;padding:8px 10px;border-radius:6px;font-size:.85rem;width:100%}
-input:focus{outline:none;border-color:#7dd3fc}
-.btn-primary{background:#16a34a;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;width:100%;margin-top:10px}
-.btn-primary:hover{background:#15803d}
-.btn-secondary{background:#1d4ed8;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:.8rem;cursor:pointer}
-.btn-secondary:hover{background:#1e40af}
-.error-box{background:#3b0000;border:1px solid #f00;color:#f88;padding:10px 14px;border-radius:6px;margin-top:10px;display:none}
-.info-box{background:#0a1628;border:1px solid #1e3a5f;padding:10px 14px;border-radius:6px;font-size:.78rem;color:#7dd3fc;margin-top:10px}
-.dashboard{display:none}
-.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.year-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.ytab{background:#1e1e2e;border:1px solid #444;color:#aaa;padding:6px 14px;border-radius:6px;font-size:.82rem;cursor:pointer;transition:.2s}
-.ytab:hover{border-color:#7dd3fc;color:#7dd3fc}
-.ytab.active{background:#1d4ed8;border-color:#3b82f6;color:#fff}
-.mode-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.mtab{background:#1e1e2e;border:1px solid #444;color:#aaa;padding:6px 12px;border-radius:6px;font-size:.78rem;cursor:pointer;transition:.2s}
-.mtab:hover{border-color:#a78bfa;color:#a78bfa}
-.mtab.active{background:#5b21b6;border-color:#7c3aed;color:#fff}
-.stats-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.stat-card{background:#1e1e2e;border-radius:8px;padding:12px 16px;flex:1;min-width:120px;border-left:3px solid #555}
-.stat-card.orange{border-color:#f97316}.stat-card.blue{border-color:#3b82f6}.stat-card.rose{border-color:#fb7185}.stat-card.green{border-color:#22c55e}.stat-card.purple{border-color:#a78bfa}
-.stat-label{font-size:.7rem;color:#888;margin-bottom:2px}
-.stat-value{font-size:1.3rem;font-weight:700;color:#eee}
-.chart-box{background:#1e1e2e;border-radius:10px;padding:16px;margin-bottom:16px}
-.chart-box canvas{max-height:320px}
-.progress-wrap{background:#1e1e2e;border-radius:6px;padding:10px 14px;font-size:.8rem;color:#aaa}
-.progress-fill{height:6px;background:#3b82f6;border-radius:3px;margin-top:6px;transition:width .3s}
+body{font-family:Arial,sans-serif;background:#0d1117;color:#cdd9e5;min-height:100vh}
+#pg-cfg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+#pg-app{display:none;padding:24px;max-width:1400px;margin:0 auto}
+.box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:600px;width:100%}
+h1{color:#58a6ff;font-size:20px;margin-bottom:6px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:24px}
+label{display:block;font-size:12px;color:#8b949e;margin-bottom:3px;margin-top:12px}
+input{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px}
+input:focus{outline:none;border-color:#58a6ff}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{display:block;width:100%;padding:10px;margin-top:20px;background:#238636;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:bold}
+.btn:hover{background:#2ea043}
+.btn-sm{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-sm:hover{background:#30363d}
+.btn-tab{background:#21262d;color:#8b949e;border:1px solid #30363d;padding:6px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin-right:6px;margin-bottom:6px}
+.btn-tab.active{background:#1f3a6e;color:#58a6ff;border-color:#388bfd}
+.err{color:#f85149;font-size:13px;margin-top:10px;padding:10px;background:#ff000018;border-radius:6px;border:1px solid #f8514940}
+.note{color:#8b949e;font-size:12px;margin-top:16px;padding:10px 14px;background:#161b22;border-radius:6px;border:1px solid #30363d;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center}
+.stat-val{font-size:26px;font-weight:bold;margin-bottom:3px}
+.stat-lbl{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
+.chart-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin-bottom:20px}
+.hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.hdr h2{color:#58a6ff;font-size:20px}
+.hdr-btns{display:flex;gap:8px}
+.year-tabs{margin-bottom:14px}
+.view-tabs{margin-bottom:14px}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>&#x1F4C8; Densidade de Casos Ativos</h1>
-  <p class="subtitle">Registro Consultorias &mdash; Dashboard de An&aacute;lise</p>
 
-  <div class="setup-box" id="setupBox">
-    <h2>&#x1F527; Configura&ccedil;&atilde;o</h2>
-    <div class="form-row">
-      <div class="form-group" style="flex:2;min-width:300px">
-        <label>Personal Access Token do Airtable</label>
-        <input type="password" id="inToken" placeholder="patXXXXXX..." />
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
+<div id="pg-cfg">
+  <div class="box">
+    <h1>&#x1F4CA; Densidade de Casos Ativos</h1>
+    <p class="sub">Configure o acesso ao Airtable para gerar o dashboard</p>
+
+    <label>Personal Access Token do Airtable</label>
+    <input type="password" id="fToken" placeholder="patXXXXXX...">
+
+    <div class="row2" style="margin-top:12px">
+      <div>
         <label>Base ID</label>
-        <input type="text" id="inBase" value="appio7ZC2rZahAJWl" />
+        <input type="text" id="fBase" placeholder="appXXXXXX">
       </div>
-      <div class="form-group">
+      <div>
         <label>Table ID</label>
-        <input type="text" id="inTable" value="tblYq7mKJNQRaiHA3" />
+        <input type="text" id="fTable" placeholder="tblXXXXXX">
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>View ID (opcional)</label>
-        <input type="text" id="inView" value="viwxn35nLyYeQpk89" />
+
+    <label>View ID (opcional)</label>
+    <input type="text" id="fView" placeholder="viwXXXXXX">
+
+    <div class="row2" style="margin-top:0">
+      <div>
+        <label>Nome do Campo: Data Início</label>
+        <input type="text" id="fStart" placeholder="Data Avaliação">
       </div>
-      <div class="form-group">
-        <label>Campo In&iacute;cio (Field ID)</label>
-        <input type="text" id="inFieldStart" value="fldZUVJ76Q95Xu1Fi" />
-      </div>
-      <div class="form-group">
-        <label>Campo Fim (Field ID)</label>
-        <input type="text" id="inFieldEnd" value="fldgbvSx7kxfyYyNz" />
+      <div>
+        <label>Nome do Campo: Data Fim</label>
+        <input type="text" id="fEnd" placeholder="Data Alta Cardiológica">
       </div>
     </div>
-    <div id="errBox" class="error-box"></div>
-    <button class="btn-primary" onclick="doLoad()">&#x25B6; Carregar Dados</button>
-    <div class="info-box">
-      &#x1F512; Token salvo apenas no seu navegador (localStorage). Nenhum dado de pacientes &eacute; enviado ao GitHub.<br>
+
+    <div id="cfgErr" class="err" style="display:none"></div>
+
+    <button class="btn" onclick="startLoad()">&#x25BA; Carregar Dados</button>
+
+    <p class="note">
+      &#x1F512; Token salvo apenas no seu navegador (localStorage). Nenhum dado de pacientes é enviado ao GitHub.<br>
       &#x1F504; Clique em <em>Atualizar</em> para buscar os dados mais recentes do Airtable.
-    </div>
-  </div>
-
-  <div class="dashboard" id="dashBox">
-    <div class="top-bar">
-      <div class="year-tabs" id="yearTabs"></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn-secondary" onclick="showSetup()">&#x2699; Config</button>
-        <button class="btn-secondary" onclick="doRefresh()">&#x1F504; Atualizar</button>
-      </div>
-    </div>
-    <div class="mode-tabs" id="modeTabs">
-      <button class="mtab active" onclick="setMode('daily',this)">Di&aacute;rio</button>
-      <button class="mtab" onclick="setMode('weekly',this)">Semanal</button>
-      <button class="mtab" onclick="setMode('monthly_max',this)">Mensal (M&aacute;x)</button>
-      <button class="mtab" onclick="setMode('monthly_avg',this)">Mensal (M&eacute;dia)</button>
-      <button class="mtab" onclick="setMode('monthly_med',this)">Mensal (Mediana)</button>
-    </div>
-    <div class="stats-row">
-      <div class="stat-card orange"><div class="stat-label">Pico M&aacute;ximo</div><div class="stat-value" id="sPeak">-</div></div>
-      <div class="stat-card blue"><div class="stat-label">M&eacute;dia Di&aacute;ria</div><div class="stat-value" id="sMean">-</div></div>
-      <div class="stat-card rose"><div class="stat-label">Mediana Di&aacute;ria</div><div class="stat-value" id="sMedian">-</div></div>
-      <div class="stat-card green"><div class="stat-label">Registros Ativos</div><div class="stat-value" id="sActive">-</div></div>
-      <div class="stat-card purple"><div class="stat-label">Dias Analisados</div><div class="stat-value" id="sDays">-</div></div>
-    </div>
-    <div class="chart-box">
-      <canvas id="mainChart"></canvas>
-    </div>
-  </div>
-
-  <div id="progressBox" class="progress-wrap" style="display:none">
-    <span id="progressTxt">Carregando...</span>
-    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </p>
   </div>
 </div>
 
+<div id="pg-app">
+  <div class="hdr">
+    <h2>&#x1F4CA; Casos Ativos Simultâneos</h2>
+    <div class="hdr-btns">
+      <button class="btn-sm" onclick="doRefresh()">&#x1F504; Atualizar</button>
+      <button class="btn-sm" onclick="goConfig()">&#x2699;&#xFE0F; Config</button>
+    </div>
+  </div>
+
+  <div class="year-tabs" id="yearTabs"></div>
+  <div class="view-tabs" id="viewTabs"></div>
+  <div class="stats" id="statsGrid"></div>
+  <div class="chart-box"><canvas id="myChart" height="90"></canvas></div>
+</div>
+
 <script>
-var G = {
-  token:'', baseId:'', tableId:'', viewId:'',
-  fieldStart:'', fieldEnd:'',
-  records:[], daily:{}, years:[],
-  curYear:'total', curMode:'daily', chart:null
+var LS = {
+  save: function(k,v){ try{localStorage.setItem(k,v);}catch(e){} },
+  load: function(k,d){ try{return localStorage.getItem(k)||d||'';}catch(e){return d||'';} }
 };
 
-function showErr(msg) {
-  var b = document.getElementById('errBox');
-  b.style.display = 'block';
-  b.textContent = 'Erro: ' + msg;
+var CFG = {token:'',base:'',table:'',view:'',fieldStart:'',fieldEnd:''};
+var DAILY = {};
+var YEARS = [];
+var TOTAL_RECORDS = 0;
+var CUR_YEAR = 'total';
+var CUR_VIEW = 'diario';
+var CHART = null;
+
+var VIEWS = [
+  {id:'diario',     lbl:'Diário'},
+  {id:'semanal',    lbl:'Semanal'},
+  {id:'mensal-max', lbl:'Mensal (Máx)'},
+  {id:'mensal-avg', lbl:'Mensal (Média)'},
+  {id:'mensal-mdn', lbl:'Mensal (Mediana)'}
+];
+
+// Restore saved values
+(function(){
+  document.getElementById('fToken').value  = LS.load('dash_token');
+  document.getElementById('fBase').value   = LS.load('dash_base');
+  document.getElementById('fTable').value  = LS.load('dash_table');
+  document.getElementById('fView').value   = LS.load('dash_view');
+  document.getElementById('fStart').value  = LS.load('dash_start', 'Data Avaliação');
+  document.getElementById('fEnd').value    = LS.load('dash_end',   'Data Alta Cardiológica');
+})();
+
+function startLoad() {
+  var t  = document.getElementById('fToken').value.trim();
+  var b  = document.getElementById('fBase').value.trim();
+  var tb = document.getElementById('fTable').value.trim();
+  var v  = document.getElementById('fView').value.trim();
+  var fs = document.getElementById('fStart').value.trim();
+  var fe = document.getElementById('fEnd').value.trim();
+
+  if (!t || !b || !tb || !fs || !fe) {
+    showErr('cfgErr', 'Preencha: Token, Base ID, Table ID, e os dois nomes de campos de data.');
+    return;
+  }
+  showErr('cfgErr', '');
+
+  CFG.token = t; CFG.base = b; CFG.table = tb; CFG.view = v;
+  CFG.fieldStart = fs; CFG.fieldEnd = fe;
+
+  LS.save('dash_token', t); LS.save('dash_base', b); LS.save('dash_table', tb);
+  LS.save('dash_view', v); LS.save('dash_start', fs); LS.save('dash_end', fe);
+
+  fetchPage([], null);
 }
-function hideErr() {
-  var b = document.getElementById('errBox');
-  b.style.display = 'none';
-  b.textContent = '';
-}
-function setProgress(pct, txt) {
-  var pb = document.getElementById('progressBox');
-  pb.style.display = (pct >= 100) ? 'none' : 'block';
-  document.getElementById('progressFill').style.width = pct + '%';
-  if (txt) document.getElementById('progressTxt').textContent = txt;
-}
-function showSetup() {
-  document.getElementById('setupBox').style.display = 'block';
-  document.getElementById('dashBox').style.display = 'none';
-}
-function doLoad() {
-  G.token = document.getElementById('inToken').value.trim();
-  G.baseId = document.getElementById('inBase').value.trim();
-  G.tableId = document.getElementById('inTable').value.trim();
-  G.viewId = document.getElementById('inView').value.trim();
-  G.fieldStart = document.getElementById('inFieldStart').value.trim();
-  G.fieldEnd = document.getElementById('inFieldEnd').value.trim();
-  if (!G.token || !G.baseId || !G.tableId) { showErr('Preencha Token, Base ID e Table ID.'); return; }
-  hideErr();
-  localStorage.setItem('at_token', G.token);
-  localStorage.setItem('at_base', G.baseId);
-  localStorage.setItem('at_table', G.tableId);
-  localStorage.setItem('at_view', G.viewId);
-  localStorage.setItem('at_fs', G.fieldStart);
-  localStorage.setItem('at_fe', G.fieldEnd);
-  fetchAll(null, []);
-}
-function doRefresh() {
-  if (!G.token) { showSetup(); return; }
-  fetchAll(null, []);
-}
-function fetchAll(offset, acc) {
-  var url = 'https://api.airtable.com/v0/' + G.baseId + '/' + G.tableId + '?pageSize=100';
-  if (G.viewId) url += '&view=' + encodeURIComponent(G.viewId);
-  if (G.fieldStart) url += '&fields[]=' + encodeURIComponent(G.fieldStart);
-  if (G.fieldEnd) url += '&fields[]=' + encodeURIComponent(G.fieldEnd);
-  if (offset) url += '&offset=' + encodeURIComponent(offset);
-  setProgress(10, 'Buscando registros...');
-  fetch(url, { headers: { 'Authorization': 'Bearer ' + G.token } })
-  .then(function(r) {
-    if (!r.ok) return r.json().then(function(e){ throw new Error((e.error && e.error.message) || r.status); });
-    return r.json();
-  })
-  .then(function(data) {
-    var combined = acc.concat(data.records || []);
-    setProgress(Math.min(90, 10 + combined.length/35), 'Carregando... ' + combined.length + ' registros');
-    if (data.offset) fetchAll(data.offset, combined);
-    else { setProgress(95, 'Processando...'); processRecords(combined); }
-  })
-  .catch(function(err) { setProgress(100,''); showErr('Falha na API: ' + err.message); });
-}
-function processRecords(records) {
-  var today = new Date(); today.setHours(0,0,0,0);
-  var todayStr = today.toISOString().split('T')[0];
-  var dateKeys = [];
-  var keySet = {};
-  for (var i = 0; i < Math.min(50, records.length); i++) {
-    var f = records[i].fields; if (!f) continue;
-    var keys = Object.keys(f);
-    for (var k = 0; k < keys.length; k++) {
-      var key = keys[k];
-      if (keySet[key]) continue;
-      var sample = f[key];
-      if (sample && typeof sample === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(sample)) {
-        dateKeys.push(key); keySet[key] = 1;
+
+function fetchPage(acc, offset) {
+  var url = 'https://api.airtable.com/v0/' + CFG.base + '/' + CFG.table + '?pageSize=100';
+  if (CFG.view)  url += '&view=' + encodeURIComponent(CFG.view);
+  if (offset)    url += '&offset=' + encodeURIComponent(offset);
+
+  fetch(url, {headers:{Authorization:'Bearer ' + CFG.token}})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if (d.error) {
+        showErr('cfgErr', 'Erro API: ' + d.error.message);
+        return;
       }
-    }
-  }
-  if (dateKeys.length === 0) {
-    var sample = records.length > 0 ? JSON.stringify(Object.keys(records[0].fields || {})) : 'vazio';
-    setProgress(100,''); showErr('Campo de data nao encontrado. Chaves: ' + sample); return;
-  }
-  var kStart = dateKeys[0];
-  var kEnd = dateKeys.length > 1 ? dateKeys[1] : null;
-  var valid = [];
-  for (var i = 0; i < records.length; i++) {
-    var f = records[i].fields; if (!f) continue;
-    var sv = f[kStart]; if (!sv) continue;
-    var start = sv.split('T')[0];
-    var ev = kEnd ? f[kEnd] : null;
-    var end = ev ? ev.split('T')[0] : todayStr;
-    if (start > end) { var tmp=start; start=end; end=tmp; }
-    valid.push({start:start, end:end});
-  }
-  if (valid.length === 0) { setProgress(100,''); showErr('Nenhum registro com datas validas. Key inicio: ' + kStart); return; }
-  G.records = valid;
-  buildDaily();
-  setProgress(100,'');
-  renderDashboard();
+      var recs = d.records || [];
+      for (var i=0;i<recs.length;i++) acc.push(recs[i]);
+      if (d.offset) {
+        fetchPage(acc, d.offset);
+      } else {
+        buildDashboard(acc);
+      }
+    })
+    .catch(function(e){ showErr('cfgErr', 'Erro de rede: ' + e.message); });
 }
-function buildDaily() {
-  var minD = G.records[0].start, maxD = G.records[0].end;
-  for (var i = 0; i < G.records.length; i++) {
-    if (G.records[i].start < minD) minD = G.records[i].start;
-    if (G.records[i].end > maxD) maxD = G.records[i].end;
-  }
+
+function buildDashboard(recs) {
+  var today = new Date(); today.setHours(0,0,0,0);
   var daily = {};
-  var d = new Date(minD + 'T12:00:00Z');
-  var dmax = new Date(maxD + 'T12:00:00Z');
-  while (d <= dmax) { daily[d.toISOString().split('T')[0]] = 0; d.setDate(d.getDate()+1); }
-  for (var i = 0; i < G.records.length; i++) {
-    var r = G.records[i];
-    var d2 = new Date(r.start+'T12:00:00Z');
-    var d2m = new Date(r.end+'T12:00:00Z');
-    while (d2 <= d2m) { var ds=d2.toISOString().split('T')[0]; if(daily[ds]!==undefined)daily[ds]++; d2.setDate(d2.getDate()+1); }
-  }
-  G.daily = daily;
-  var ySet = {};
-  for (var dt in daily) ySet[dt.substring(0,4)]=1;
-  G.years = Object.keys(ySet).sort();
-}
-function renderDashboard() {
-  document.getElementById('setupBox').style.display = 'none';
-  document.getElementById('dashBox').style.display = 'block';
-  var tabs = document.getElementById('yearTabs');
-  tabs.innerHTML = '';
-  for (var i = 0; i < G.years.length; i++) {
-    var b = document.createElement('button');
-    b.className = 'ytab' + (G.years[i]===G.curYear?' active':'');
-    b.textContent = G.years[i];
-    b.setAttribute('data-yr', G.years[i]);
-    b.setAttribute('onclick', 'setYear("'+G.years[i]+'",this)');
-    tabs.appendChild(b);
-  }
-  var bt = document.createElement('button');
-  bt.className = 'ytab' + (G.curYear==='total'?' active':'');
-  bt.textContent = 'Período Total';
-  bt.setAttribute('data-yr', 'total');
-  bt.setAttribute('onclick', 'setYear("total",this)');
-  tabs.appendChild(bt);
-  updateChart();
-}
-function setYear(yr, el) {
-  G.curYear = yr;
-  var tabs = document.querySelectorAll('.ytab');
-  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-  if (el) el.classList.add('active');
-  else {
-    for (var i = 0; i < tabs.length; i++) {
-      if (tabs[i].getAttribute('data-yr') === yr) { tabs[i].classList.add('active'); break; }
+  var valid = 0;
+
+  for (var i=0; i<recs.length; i++) {
+    var f = recs[i].fields;
+    var sv = f[CFG.fieldStart];
+    if (!sv) continue;
+    var sd = new Date(sv); sd.setHours(0,0,0,0);
+    if (isNaN(sd.getTime())) continue;
+
+    var ev = f[CFG.fieldEnd];
+    var ed = ev ? new Date(ev) : new Date(today);
+    ed.setHours(0,0,0,0);
+    if (isNaN(ed.getTime())) ed = new Date(today);
+    if (ed < sd) ed = new Date(sd);
+
+    valid++;
+    var cur = new Date(sd);
+    while (cur <= ed) {
+      var k = cur.toISOString().slice(0,10);
+      daily[k] = (daily[k]||0) + 1;
+      cur.setDate(cur.getDate()+1);
     }
   }
-  updateChart();
+
+  if (!valid) {
+    showErr('cfgErr', 'Nenhum registro válido. Verifique os nomes dos campos (use o nome exato como no Airtable, ex: "Data Avaliação").');
+    return;
+  }
+
+  DAILY = daily;
+  TOTAL_RECORDS = valid;
+  var ySet = {};
+  Object.keys(daily).forEach(function(k){ ySet[k.slice(0,4)]=1; });
+  YEARS = Object.keys(ySet).sort();
+  CUR_YEAR = 'total'; CUR_VIEW = 'diario';
+
+  document.getElementById('pg-cfg').style.display = 'none';
+  document.getElementById('pg-app').style.display = 'block';
+  renderAll();
 }
-function setMode(mode, el) {
-  G.curMode = mode;
-  var tabs = document.querySelectorAll('.mtab');
-  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-  if (el) el.classList.add('active');
-  updateChart();
+
+function renderAll() {
+  renderYearTabs();
+  renderViewTabs();
+  renderChart();
 }
+
+function renderYearTabs() {
+  var tabs = [{id:'total',lbl:'Período Total'}];
+  YEARS.forEach(function(y){ tabs.push({id:y,lbl:y}); });
+  document.getElementById('yearTabs').innerHTML = tabs.map(function(t){
+    return '<button class="btn-tab'+(t.id===CUR_YEAR?' active':'')+'" onclick="setYear(''+t.id+'')">'+t.lbl+'</button>';
+  }).join('');
+}
+
+function renderViewTabs() {
+  document.getElementById('viewTabs').innerHTML = VIEWS.map(function(v){
+    return '<button class="btn-tab'+(v.id===CUR_VIEW?' active':'')+'" onclick="setView(''+v.id+'')">'+v.lbl+'</button>';
+  }).join('');
+}
+
+function setYear(y){ CUR_YEAR=y; renderAll(); }
+function setView(v){ CUR_VIEW=v; renderAll(); }
+function goConfig(){ document.getElementById('pg-app').style.display='none'; document.getElementById('pg-cfg').style.display='flex'; }
+function doRefresh(){ fetchPage([],null); }
+
 function getFiltered() {
-  if (G.curYear === 'total') return G.daily;
-  var r = {};
-  for (var dt in G.daily) if (dt.substring(0,4)===G.curYear) r[dt]=G.daily[dt];
+  if (CUR_YEAR==='total') return DAILY;
+  var r={};
+  Object.keys(DAILY).forEach(function(k){ if(k.slice(0,4)===CUR_YEAR) r[k]=DAILY[k]; });
   return r;
 }
-function median(arr) {
-  if (!arr.length) return 0;
-  var s = arr.slice().sort(function(a,b){return a-b;});
-  var m = Math.floor(s.length/2);
-  return s.length%2 ? s[m] : (s[m-1]+s[m])/2;
-}
-function updateChart() {
-  var filtered = getFiltered();
-  var dates = Object.keys(filtered).sort();
-  if (!dates.length) return;
-  var values = dates.map(function(d){return filtered[d];});
-  var peak = Math.max.apply(null,values);
-  var meanVal = values.reduce(function(a,b){return a+b;},0)/values.length;
-  var medVal = median(values);
-  var today = new Date().toISOString().split('T')[0];
-  var active = (filtered[today]!==undefined) ? filtered[today] : 0;
-  document.getElementById('sPeak').textContent = peak;
-  document.getElementById('sMean').textContent = meanVal.toFixed(1);
-  document.getElementById('sMedian').textContent = medVal.toFixed(1);
-  document.getElementById('sActive').textContent = active;
-  document.getElementById('sDays').textContent = dates.length;
-  var labels, data, mainLabel;
-  if (G.curMode==='daily') {
-    labels=dates; data=values; mainLabel='Casos/dia';
-  } else if (G.curMode==='weekly') {
+
+function buildChartData(dm) {
+  var keys = Object.keys(dm).sort();
+  if (!keys.length) return {labels:[],data:[],legend:'Diário'};
+
+  if (CUR_VIEW==='diario') return {labels:keys,data:keys.map(function(k){return dm[k];}),legend:'Casos ativos por dia'};
+
+  if (CUR_VIEW==='semanal') {
     var wk={};
-    for (var i=0;i<dates.length;i++) {
-      var d=new Date(dates[i]+'T12:00:00Z');
-      var mon=new Date(d); mon.setDate(d.getDate()-((d.getDay()+6)%7));
-      var wk2=mon.toISOString().split('T')[0];
-      if(!wk[wk2])wk[wk2]=[];
-      wk[wk2].push(filtered[dates[i]]);
-    }
-    labels=Object.keys(wk).sort();
-    data=labels.map(function(k){var a=wk[k];return a.reduce(function(x,y){return x+y;},0)/a.length;});
-    mainLabel='Média semanal';
-  } else {
-    var mo={};
-    for (var i=0;i<dates.length;i++) {
-      var mk=dates[i].substring(0,7);
-      if(!mo[mk])mo[mk]=[];
-      mo[mk].push(filtered[dates[i]]);
-    }
-    labels=Object.keys(mo).sort();
-    if(G.curMode==='monthly_max'){data=labels.map(function(k){return Math.max.apply(null,mo[k]);});mainLabel='Máximo mensal';}
-    else if(G.curMode==='monthly_avg'){data=labels.map(function(k){var a=mo[k];return a.reduce(function(x,y){return x+y;},0)/a.length;});mainLabel='Média mensal';}
-    else {data=labels.map(function(k){return median(mo[k]);});mainLabel='Mediana mensal';}
+    keys.forEach(function(k){
+      var d=new Date(k),day=d.getDay(),diff=d.getDate()-day+(day===0?-6:1),m=new Date(d);
+      m.setDate(diff); m.setHours(0,0,0,0);
+      var wkey=m.toISOString().slice(0,10);
+      if(!wk[wkey])wk[wkey]=[];
+      wk[wkey].push(dm[k]);
+    });
+    var wkeys=Object.keys(wk).sort();
+    return {labels:wkeys,data:wkeys.map(function(k){return Math.max.apply(null,wk[k]);}),legend:'Máx semanal'};
   }
-  var datasets = [{
-    label:mainLabel, data:data,
-    borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,0.15)',
-    borderWidth:1.5, fill:true,
-    pointRadius:dates.length>180?0:2, tension:0.3
-  }];
-  if (G.curMode==='daily') {
-    datasets.push({label:'Média',data:Array(data.length).fill(parseFloat(meanVal.toFixed(2))),borderColor:'#60a5fa',borderWidth:1.5,borderDash:[6,3],pointRadius:0,fill:false});
-    datasets.push({label:'Mediana',data:Array(data.length).fill(parseFloat(medVal.toFixed(2))),borderColor:'#fb7185',borderWidth:1.5,borderDash:[3,3],pointRadius:0,fill:false});
-  }
-  if (G.chart) G.chart.destroy();
-  var ctx = document.getElementById('mainChart').getContext('2d');
-  G.chart = new Chart(ctx, {
-    type:'line', data:{labels:labels,datasets:datasets},
+
+  var mo={};
+  keys.forEach(function(k){var mk=k.slice(0,7);if(!mo[mk])mo[mk]=[];mo[mk].push(dm[k]);});
+  var mkeys=Object.keys(mo).sort();
+
+  if (CUR_VIEW==='mensal-max') return {labels:mkeys,data:mkeys.map(function(k){return Math.max.apply(null,mo[k]);}),legend:'Máx mensal'};
+
+  if (CUR_VIEW==='mensal-avg') return {labels:mkeys,data:mkeys.map(function(k){
+    var a=mo[k]; return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length*10)/10;
+  }),legend:'Média mensal'};
+
+  if (CUR_VIEW==='mensal-mdn') return {labels:mkeys,data:mkeys.map(function(k){
+    var a=mo[k].slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);
+    return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;
+  }),legend:'Mediana mensal'};
+
+  return {labels:[],data:[],legend:''};
+}
+
+function median(arr) {
+  var a=arr.slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);
+  return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;
+}
+
+function renderChart() {
+  var dm = getFiltered();
+  var vals = Object.keys(dm).map(function(k){return dm[k];});
+  if (!vals.length) { document.getElementById('statsGrid').innerHTML='<p style="color:#8b949e">Sem dados para este período.</p>'; return; }
+
+  var today = new Date().toISOString().slice(0,10);
+  var stats = {
+    max:  Math.max.apply(null,vals),
+    avg:  Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length*10)/10,
+    mdn:  median(vals),
+    active: dm[today]||0,
+    days: vals.length
+  };
+
+  document.getElementById('statsGrid').innerHTML = [
+    sc('#f97316',stats.max,  'Pico Máximo','casos/dia'),
+    sc('#3b82f6',stats.avg,  'Média Diária','casos/dia'),
+    sc('#ec4899',stats.mdn,  'Mediana Diária','casos/dia'),
+    sc('#22c55e',stats.active,'Registros Ativos','hoje'),
+    sc('#a855f7',stats.days,  'Dias Analisados','dias')
+  ].join('');
+
+  var cd = buildChartData(dm);
+  var ctx = document.getElementById('myChart').getContext('2d');
+  if (CHART) { CHART.destroy(); CHART=null; }
+
+  var isLine = CUR_VIEW==='mensal-avg'||CUR_VIEW==='mensal-mdn';
+  CHART = new Chart(ctx, {
+    type: isLine?'line':'bar',
+    data: {
+      labels: cd.labels,
+      datasets:[{
+        label: cd.legend,
+        data: cd.data,
+        backgroundColor: isLine?'transparent':'rgba(56,139,253,0.45)',
+        borderColor: '#388bfd',
+        borderWidth: isLine?2:1,
+        pointRadius: isLine?0:0,
+        tension: 0.3,
+        fill: false
+      }]
+    },
     options:{
       responsive:true,
-      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#cdd9e5'}}},
       scales:{
-        x:{ticks:{color:'#888',maxTicksLimit:12,maxRotation:0},grid:{color:'rgba(255,255,255,0.05)'}},
-        y:{ticks:{color:'#888'},grid:{color:'rgba(255,255,255,0.05)'},min:0,max:G.curYear==='total'?undefined:30}
-      },
-      plugins:{
-        legend:{labels:{color:'#aaa',font:{size:11}}},
-        tooltip:{backgroundColor:'rgba(0,0,0,0.8)'}
+        x:{ticks:{color:'#8b949e',maxTicksLimit:20},grid:{color:'#21262d'}},
+        y:{ticks:{color:'#8b949e'},grid:{color:'#21262d'},beginAtZero:true}
       }
     }
   });
 }
-(function(){
-  var t=localStorage.getItem('at_token');
-  var b=localStorage.getItem('at_base');
-  var tbl=localStorage.getItem('at_table');
-  var v=localStorage.getItem('at_view');
-  var fs=localStorage.getItem('at_fs');
-  var fe=localStorage.getItem('at_fe');
-  if(t)document.getElementById('inToken').value=t;
-  if(b)document.getElementById('inBase').value=b;
-  if(tbl)document.getElementById('inTable').value=tbl;
-  if(v)document.getElementById('inView').value=v;
-  if(fs)document.getElementById('inFieldStart').value=fs;
-  if(fe)document.getElementById('inFieldEnd').value=fe;
-})();
+
+function sc(color,val,lbl,unit) {
+  return '<div class="stat"><div class="stat-val" style="color:'+color+'">'+val+'</div>'+
+         '<div class="stat-lbl">'+lbl+'</div>'+
+         '<div style="font-size:10px;color:#6e7681;margin-top:2px">'+unit+'</div></div>';
+}
+
+function showErr(id,msg) {
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=msg;
+  el.style.display=msg?'block':'none';
+}
 </script>
 </body>
 </html>
