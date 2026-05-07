@@ -4,76 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Densidade de Casos Ativos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#0d1117;color:#cdd9e5;min-height:100vh}
-#pg-cfg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-#pg-app{display:none;padding:24px;max-width:1400px;margin:0 auto}
-.box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:600px;width:100%}
-h1{color:#58a6ff;font-size:20px;margin-bottom:6px}
-.sub{color:#8b949e;font-size:13px;margin-bottom:24px}
-label{display:block;font-size:12px;color:#8b949e;margin-bottom:3px;margin-top:12px}
-input{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px}
-input:focus{outline:none;border-color:#58a6ff}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
-.btn{display:block;width:100%;padding:10px;margin-top:20px;background:#238636;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:bold}
-.btn:hover{background:#2ea043}
-.btn-sm{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer}
-.btn-sm:hover{background:#30363d}
-.btn-tab{background:#21262d;color:#8b949e;border:1px solid #30363d;padding:6px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin-right:6px;margin-bottom:6px}
-.btn-tab.active{background:#1f3a6e;color:#58a6ff;border-color:#388bfd}
-.err{color:#f85149;font-size:13px;margin-top:10px;padding:10px;background:#ff000018;border-radius:6px;border:1px solid #f8514940}
-.note{color:#8b949e;font-size:12px;margin-top:16px;padding:10px 14px;background:#161b22;border-radius:6px;border:1px solid #30363d;line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
-.stat{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center}
-.stat-val{font-size:26px;font-weight:bold;margin-bottom:3px}
-.stat-lbl{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
-.stat-unit{font-size:10px;color:#6e7681;margin-top:2px}
-.chart-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin-bottom:20px}
-.hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.hdr h2{color:#58a6ff;font-size:20px}
-.hdr-btns{display:flex;gap:8px}
-.year-tabs{margin-bottom:14px}
-.view-tabs{margin-bottom:14px}
+body{font-family:"Inter",system-ui,sans-serif;background:#f5f4f0;color:#1a1a2e;min-height:100vh}
+
+/* Setup page */
+#pg-cfg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#f5f4f0 0%,#eeeae4 100%)}
+.cfg-card{background:#fff;border-radius:20px;padding:40px 44px;max-width:580px;width:100%;box-shadow:0 4px 6px -1px rgba(0,0,0,.06),0 10px 40px -8px rgba(0,0,0,.10)}
+.cfg-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cfg-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cfg-title{font-size:22px;font-weight:700;color:#0f172a;letter-spacing:-.4px}
+.cfg-sub{font-size:13px;color:#64748b;margin-bottom:28px;line-height:1.5}
+
+fieldset{border:none;padding:0;margin-bottom:20px}
+legend{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.field-group{display:flex;flex-direction:column;gap:10px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+label{font-size:12px;font-weight:500;color:#475569}
+input{padding:9px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:13px;color:#0f172a;background:#f8fafc;transition:border-color .15s,box-shadow .15s;outline:none}
+input:focus{border-color:#4f46e5;background:#fff;box-shadow:0 0 0 3px rgba(79,70,229,.10)}
+input::placeholder{color:#cbd5e1}
+
+.btn-load{width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.1px;transition:opacity .15s,transform .1s;box-shadow:0 4px 14px rgba(79,70,229,.30)}
+.btn-load:hover{opacity:.92;transform:translateY(-1px)}
+.btn-load:active{transform:translateY(0)}
+
+.cfg-err{font-size:13px;color:#dc2626;margin-top:10px;padding:10px 14px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;display:none}
+.cfg-note{font-size:12px;color:#94a3b8;margin-top:18px;padding:12px 16px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;line-height:1.7}
+.cfg-note strong{color:#64748b}
+
+/* App page */
+#pg-app{display:none;min-height:100vh;background:#f5f4f0}
+.app-topbar{background:#fff;border-bottom:1px solid #e8e5df;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.app-brand{display:flex;align-items:center;gap:10px}
+.app-brand-icon{width:30px;height:30px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.app-brand-name{font-size:15px;font-weight:700;color:#0f172a;letter-spacing:-.3px}
+.app-brand-sep{color:#e2e8f0;margin:0 4px}
+.app-brand-sub{font-size:13px;color:#94a3b8;font-weight:400}
+.app-actions{display:flex;gap:8px}
+
+.btn-ghost{background:transparent;color:#64748b;border:1.5px solid #e2e8f0;padding:6px 14px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-ghost:hover{background:#f1f5f9;border-color:#cbd5e1;color:#0f172a}
+
+.app-body{padding:28px 32px;max-width:1440px;margin:0 auto}
+
+/* Tabs */
+.tabs-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.tab{background:transparent;color:#64748b;border:1.5px solid #e2e8f0;padding:6px 16px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.tab:hover{background:#f1f5f9;color:#334155}
+.tab.active{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:0 2px 8px rgba(79,70,229,.25)}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}
+.stat-card{background:#fff;border-radius:16px;padding:20px 22px;border:1px solid #f0ede8;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.stat-card-inner{display:flex;flex-direction:column;gap:4px}
+.stat-dot{width:8px;height:8px;border-radius:50%;margin-bottom:8px}
+.stat-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.stat-lbl{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;margin-top:4px}
+.stat-unit{font-size:11px;color:#cbd5e1;margin-top:2px}
+
+/* Chart */
+.chart-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #f0ede8;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:8px}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.chart-title{font-size:13px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.6px}
+
+/* Section label */
+.section-label{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;margin-top:4px}
 </style>
 </head>
 <body>
 
 <div id="pg-cfg">
-  <div class="box">
-    <h1>&#x1F4CA; Densidade de Casos Ativos</h1>
-    <p class="sub">Configure o acesso ao Airtable para gerar o dashboard</p>
-    <label>Personal Access Token do Airtable</label>
-    <input type="password" id="fToken" placeholder="patXXXXXX...">
-    <div class="row2" style="margin-top:12px">
-      <div><label>Base ID</label><input type="text" id="fBase" placeholder="appXXXXXX"></div>
-      <div><label>Table ID</label><input type="text" id="fTable" placeholder="tblXXXXXX"></div>
+  <div class="cfg-card">
+    <div class="cfg-logo">
+      <div class="cfg-logo-icon">&#x1F4CA;</div>
+      <div class="cfg-title">Densidade de Casos Ativos</div>
     </div>
-    <label>View ID (opcional)</label>
-    <input type="text" id="fView" placeholder="viwXXXXXX">
-    <div class="row2">
-      <div><label>Nome do Campo: Data In&iacute;cio</label><input type="text" id="fStart" placeholder="Data Avalia&ccedil;&atilde;o"></div>
-      <div><label>Nome do Campo: Data Fim</label><input type="text" id="fEnd" placeholder="Data Alta Cardiol&oacute;gica"></div>
-    </div>
-    <div id="cfgErr" class="err" style="display:none"></div>
-    <button class="btn" id="btnLoad">&#x25BA; Carregar Dados</button>
-    <p class="note">&#x1F512; Token salvo apenas no seu navegador (localStorage). Nenhum dado &eacute; enviado ao GitHub.<br>&#x1F504; Clique em <em>Atualizar</em> para buscar os dados mais recentes do Airtable.</p>
+    <p class="cfg-sub">Configure o acesso ao Airtable para gerar a an&aacute;lise de densidade</p>
+
+    <fieldset>
+      <legend>Acesso</legend>
+      <div class="field-group">
+        <div class="field">
+          <label>Personal Access Token</label>
+          <input type="password" id="fToken" placeholder="patXXXXXX...">
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Base ID</label><input type="text" id="fBase" placeholder="appXXXXXX"></div>
+          <div class="field"><label>Table ID</label><input type="text" id="fTable" placeholder="tblXXXXXX"></div>
+        </div>
+        <div class="field"><label>View ID <span style="color:#cbd5e1">(opcional)</span></label><input type="text" id="fView" placeholder="viwXXXXXX"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Campos de Data</legend>
+      <div class="field-row">
+        <div class="field"><label>Data In&iacute;cio (abertura)</label><input type="text" id="fStart" placeholder="Data Avalia&ccedil;&atilde;o"></div>
+        <div class="field"><label>Data Fim (encerramento)</label><input type="text" id="fEnd" placeholder="Data Alta Cardiol&oacute;gica"></div>
+      </div>
+    </fieldset>
+
+    <div id="cfgErr" class="cfg-err"></div>
+    <button class="btn-load" id="btnLoad">Carregar Dados</button>
+
+    <p class="cfg-note">&#x1F512; <strong>Privacidade:</strong> o token fica salvo apenas neste navegador (localStorage). Nenhum dado de pacientes &eacute; transmitido ao GitHub.</p>
   </div>
 </div>
 
 <div id="pg-app">
-  <div class="hdr">
-    <h2>&#x1F4CA; Casos Ativos Simult&acirc;neos</h2>
-    <div class="hdr-btns">
-      <button class="btn-sm" id="btnRefresh">&#x1F504; Atualizar</button>
-      <button class="btn-sm" id="btnConfig">&#x2699;&#xFE0F; Config</button>
+  <div class="app-topbar">
+    <div class="app-brand">
+      <div class="app-brand-icon">&#x1F4CA;</div>
+      <span class="app-brand-name">Densidade de Casos</span>
+      <span class="app-brand-sep">|</span>
+      <span class="app-brand-sub" id="appSub"></span>
+    </div>
+    <div class="app-actions">
+      <button class="btn-ghost" id="btnRefresh">&#x21BA; Atualizar</button>
+      <button class="btn-ghost" id="btnConfig">&#x2699; Configurar</button>
     </div>
   </div>
-  <div class="year-tabs" id="yearTabs"></div>
-  <div class="view-tabs" id="viewTabs"></div>
-  <div class="stats" id="statsGrid"></div>
-  <div class="chart-box"><canvas id="myChart" height="90"></canvas></div>
+
+  <div class="app-body">
+    <div class="section-label">Per&iacute;odo</div>
+    <div class="tabs-row" id="yearTabs"></div>
+    <div class="section-label" style="margin-top:16px">Visualiza&ccedil;&atilde;o</div>
+    <div class="tabs-row" id="viewTabs"></div>
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title" id="chartTitle">Casos ativos por dia</span>
+      </div>
+      <canvas id="myChart" height="80"></canvas>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -85,7 +154,6 @@ var LS = {
 var CFG = {token:"",base:"",table:"",view:"",fieldStart:"",fieldEnd:""};
 var DAILY = {};
 var YEARS = [];
-var TOTAL_RECORDS = 0;
 var CUR_YEAR = "total";
 var CUR_VIEW = "diario";
 var CHART = null;
@@ -93,9 +161,17 @@ var CHART = null;
 var VIEWS = [
   {id:"diario",     lbl:"Diário"},
   {id:"semanal",    lbl:"Semanal"},
-  {id:"mensal-max", lbl:"Mensal (Máx)"},
-  {id:"mensal-avg", lbl:"Mensal (Média)"},
-  {id:"mensal-mdn", lbl:"Mensal (Mediana)"}
+  {id:"mensal-max", lbl:"Mensal — Máx"},
+  {id:"mensal-avg", lbl:"Mensal — Média"},
+  {id:"mensal-mdn", lbl:"Mensal — Mediana"}
+];
+
+var STAT_COLORS = [
+  {dot:"#f97316",val:"#ea580c"},
+  {dot:"#3b82f6",val:"#2563eb"},
+  {dot:"#a855f7",val:"#9333ea"},
+  {dot:"#10b981",val:"#059669"},
+  {dot:"#64748b",val:"#475569"}
 ];
 
 function $(id){ return document.getElementById(id); }
@@ -106,11 +182,12 @@ function showErr(id,msg){
 }
 
 function startLoad(){
-  var t=$('fToken').value.trim(), b=$('fBase').value.trim();
-  var tb=$('fTable').value.trim(), v=$('fView').value.trim();
-  var fs=$('fStart').value.trim(), fe=$('fEnd').value.trim();
-  if(!t||!b||!tb||!fs||!fe){ showErr("cfgErr","Preencha: Token, Base ID, Table ID e nomes dos campos de data."); return; }
+  var t=$("fToken").value.trim(), b=$("fBase").value.trim();
+  var tb=$("fTable").value.trim(), v=$("fView").value.trim();
+  var fs=$("fStart").value.trim(), fe=$("fEnd").value.trim();
+  if(!t||!b||!tb||!fs||!fe){ showErr("cfgErr","Preencha todos os campos obrigatórios."); return; }
   showErr("cfgErr","");
+  $("btnLoad").textContent="Carregando…"; $("btnLoad").disabled=true;
   CFG.token=t; CFG.base=b; CFG.table=tb; CFG.view=v; CFG.fieldStart=fs; CFG.fieldEnd=fe;
   LS.save("dash_token",t); LS.save("dash_base",b); LS.save("dash_table",tb);
   LS.save("dash_view",v); LS.save("dash_start",fs); LS.save("dash_end",fe);
@@ -124,13 +201,20 @@ function fetchPage(acc,offset){
   fetch(url,{headers:{Authorization:"Bearer "+CFG.token}})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.error){showErr("cfgErr","Erro API: "+d.error.message);return;}
+      if(d.error){
+        showErr("cfgErr","Erro da API: "+d.error.message);
+        $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
+        return;
+      }
       var recs=d.records||[];
       for(var i=0;i<recs.length;i++) acc.push(recs[i]);
       if(d.offset) fetchPage(acc,d.offset);
       else buildDashboard(acc);
     })
-    .catch(function(e){showErr("cfgErr","Erro de rede: "+e.message);});
+    .catch(function(e){
+      showErr("cfgErr","Erro de rede: "+e.message);
+      $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
+    });
 }
 
 function buildDashboard(recs){
@@ -154,16 +238,19 @@ function buildDashboard(recs){
     }
   }
   if(!valid){
-    showErr("cfgErr","Nenhum registro válido. Use o nome exato do campo (ex: Data Avaliação).");
+    showErr("cfgErr","Nenhum registro válido. Verifique os nomes dos campos.");
+    $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
     return;
   }
-  DAILY=daily; TOTAL_RECORDS=valid;
+  DAILY=daily;
   var ySet={};
   Object.keys(daily).forEach(function(k){ySet[k.slice(0,4)]=1;});
   YEARS=Object.keys(ySet).sort();
   CUR_YEAR="total"; CUR_VIEW="diario";
+  $("appSub").textContent=valid+" registros · "+Object.keys(daily).length+" dias";
   $("pg-cfg").style.display="none";
   $("pg-app").style.display="block";
+  $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
   renderAll();
 }
 
@@ -174,27 +261,27 @@ function renderYearTabs(){
   for(var i=0;i<YEARS.length;i++) tabs.push({id:YEARS[i],lbl:YEARS[i]});
   var html="";
   for(var j=0;j<tabs.length;j++){
-    var t=tabs[j], cls="btn-tab"+(t.id===CUR_YEAR?" active":"");
-    html+='<button class="'+cls+'" data-year="'+t.id+'">'+t.lbl+'</button>';
+    var t=tabs[j];
+    html+='<button class="tab'+(t.id===CUR_YEAR?" active":"")+'" data-year="'+t.id+'">'+t.lbl+'</button>';
   }
   $("yearTabs").innerHTML=html;
-  var btns=$("yearTabs").querySelectorAll(".btn-tab");
+  var btns=$("yearTabs").querySelectorAll(".tab");
   for(var k=0;k<btns.length;k++) btns[k].addEventListener("click",onYearClick);
 }
 
 function renderViewTabs(){
   var html="";
   for(var i=0;i<VIEWS.length;i++){
-    var v=VIEWS[i], cls="btn-tab"+(v.id===CUR_VIEW?" active":"");
-    html+='<button class="'+cls+'" data-view="'+v.id+'">'+v.lbl+'</button>';
+    var v=VIEWS[i];
+    html+='<button class="tab'+(v.id===CUR_VIEW?" active":"")+'" data-view="'+v.id+'">'+v.lbl+'</button>';
   }
   $("viewTabs").innerHTML=html;
-  var btns=$("viewTabs").querySelectorAll(".btn-tab");
+  var btns=$("viewTabs").querySelectorAll(".tab");
   for(var j=0;j<btns.length;j++) btns[j].addEventListener("click",onViewClick);
 }
 
-function onYearClick(e){ CUR_YEAR=this.getAttribute("data-year"); renderAll(); }
-function onViewClick(e){ CUR_VIEW=this.getAttribute("data-view"); renderAll(); }
+function onYearClick(){ CUR_YEAR=this.getAttribute("data-year"); renderAll(); }
+function onViewClick(){ CUR_VIEW=this.getAttribute("data-view"); renderAll(); }
 
 function getFiltered(){
   if(CUR_YEAR==="total") return DAILY;
@@ -206,7 +293,7 @@ function getFiltered(){
 function buildChartData(dm){
   var keys=Object.keys(dm).sort();
   if(!keys.length) return {labels:[],data:[],legend:""};
-  if(CUR_VIEW==="diario") return {labels:keys,data:keys.map(function(k){return dm[k];}),legend:"Casos ativos por dia"};
+  if(CUR_VIEW==="diario") return {labels:keys,data:keys.map(function(k){return dm[k];}),legend:"Casos ativos por dia",type:"bar"};
   if(CUR_VIEW==="semanal"){
     var wk={};
     keys.forEach(function(k){
@@ -217,15 +304,15 @@ function buildChartData(dm){
       wk[wkey].push(dm[k]);
     });
     var wkeys=Object.keys(wk).sort();
-    return {labels:wkeys,data:wkeys.map(function(k){return Math.max.apply(null,wk[k]);}),legend:"Máx semanal"};
+    return {labels:wkeys,data:wkeys.map(function(k){return Math.max.apply(null,wk[k]);}),legend:"Máximo semanal",type:"bar"};
   }
   var mo={};
   keys.forEach(function(k){var mk=k.slice(0,7);if(!mo[mk])mo[mk]=[];mo[mk].push(dm[k]);});
   var mkeys=Object.keys(mo).sort();
-  if(CUR_VIEW==="mensal-max") return {labels:mkeys,data:mkeys.map(function(k){return Math.max.apply(null,mo[k]);}),legend:"Máx mensal"};
-  if(CUR_VIEW==="mensal-avg") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k];return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length*10)/10;}),legend:"Média mensal"};
-  if(CUR_VIEW==="mensal-mdn") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k].slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;}),legend:"Mediana mensal"};
-  return {labels:[],data:[],legend:""};
+  if(CUR_VIEW==="mensal-max") return {labels:mkeys,data:mkeys.map(function(k){return Math.max.apply(null,mo[k]);}),legend:"Máximo mensal",type:"bar"};
+  if(CUR_VIEW==="mensal-avg") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k];return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length*10)/10;}),legend:"Média mensal",type:"line"};
+  if(CUR_VIEW==="mensal-mdn") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k].slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;}),legend:"Mediana mensal",type:"line"};
+  return {labels:[],data:[],legend:"",type:"bar"};
 }
 
 function mdn(arr){var a=arr.slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;}
@@ -233,34 +320,63 @@ function mdn(arr){var a=arr.slice().sort(function(x,y){return x-y;}),mid=Math.fl
 function renderChart(){
   var dm=getFiltered();
   var vals=Object.keys(dm).map(function(k){return dm[k];});
-  if(!vals.length){$("statsGrid").innerHTML='<p style="color:#8b949e">Sem dados para este período.</p>';return;}
+  if(!vals.length){$("statsGrid").innerHTML='<p style="color:#94a3b8;font-size:13px">Sem dados para este período.</p>';return;}
   var today=new Date().toISOString().slice(0,10);
   var mx=Math.max.apply(null,vals);
   var avg=Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length*10)/10;
   var med=mdn(vals);
   var active=dm[today]||0;
-  $("statsGrid").innerHTML=
-    sc("#f97316",mx,"Pico Máximo","casos/dia")+
-    sc("#3b82f6",avg,"Média Diária","casos/dia")+
-    sc("#ec4899",med,"Mediana Diária","casos/dia")+
-    sc("#22c55e",active,"Registros Ativos","hoje")+
-    sc("#a855f7",vals.length,"Dias Analisados","dias");
+  var statsData = [
+    {val:mx,  lbl:"Pico Máximo",    unit:"casos / dia", c:STAT_COLORS[0]},
+    {val:avg, lbl:"Média Diária",  unit:"casos / dia", c:STAT_COLORS[1]},
+    {val:med, lbl:"Mediana Diária",unit:"casos / dia", c:STAT_COLORS[2]},
+    {val:active,lbl:"Casos Ativos Hoje",unit:"em andamento", c:STAT_COLORS[3]},
+    {val:vals.length,lbl:"Dias Analisados",unit:"dias no período",c:STAT_COLORS[4]}
+  ];
+  var html="";
+  for(var i=0;i<statsData.length;i++){
+    var s=statsData[i];
+    html+='<div class="stat-card"><div class="stat-card-inner">';
+    html+='<div class="stat-dot" style="background:'+s.c.dot+'"></div>';
+    html+='<div class="stat-val" style="color:'+s.c.val+'">'+s.val+'</div>';
+    html+='<div class="stat-lbl">'+s.lbl+'</div>';
+    html+='<div class="stat-unit">'+s.unit+'</div>';
+    html+='</div></div>';
+  }
+  $("statsGrid").innerHTML=html;
+
   var cd=buildChartData(dm);
+  $("chartTitle").textContent=cd.legend;
   var ctx=$("myChart").getContext("2d");
   if(CHART){CHART.destroy();CHART=null;}
-  var isLine=CUR_VIEW==="mensal-avg"||CUR_VIEW==="mensal-mdn";
+  var isLine=cd.type==="line";
   CHART=new Chart(ctx,{
-    type:isLine?"line":"bar",
-    data:{labels:cd.labels,datasets:[{label:cd.legend,data:cd.data,backgroundColor:isLine?"transparent":"rgba(56,139,253,0.45)",borderColor:"#388bfd",borderWidth:isLine?2:1,pointRadius:0,tension:0.3,fill:false}]},
-    options:{responsive:true,plugins:{legend:{labels:{color:"#cdd9e5"}}},scales:{x:{ticks:{color:"#8b949e",maxTicksLimit:20},grid:{color:"#21262d"}},y:{ticks:{color:"#8b949e"},grid:{color:"#21262d"},beginAtZero:true}}}
+    type:cd.type,
+    data:{labels:cd.labels,datasets:[{
+      label:cd.legend,
+      data:cd.data,
+      backgroundColor:isLine?"transparent":"rgba(79,70,229,0.15)",
+      borderColor:"#4f46e5",
+      borderWidth:isLine?2.5:1.5,
+      borderRadius:isLine?0:3,
+      pointRadius:0,
+      tension:0.4,
+      fill:false
+    }]},
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:function(ctx){return " "+ctx.parsed.y+" casos";}}}
+      },
+      scales:{
+        x:{ticks:{color:"#94a3b8",font:{size:11},maxTicksLimit:18},grid:{color:"#f1f5f9"},border:{color:"#e2e8f0"}},
+        y:{ticks:{color:"#94a3b8",font:{size:11}},grid:{color:"#f1f5f9"},border:{color:"#e2e8f0"},beginAtZero:true}
+      }
+    }
   });
 }
 
-function sc(color,val,lbl,unit){
-  return '<div class="stat"><div class="stat-val" style="color:'+color+'">'+val+'</div><div class="stat-lbl">'+lbl+'</div><div class="stat-unit">'+unit+'</div></div>';
-}
-
-// Init
 (function(){
   $("fToken").value=LS.load("dash_token","");
   $("fBase").value=LS.load("dash_base","");
