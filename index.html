@@ -4,350 +4,298 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registro Consultorias — Densidade de Casos</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#0d1117;color:#cdd9e5;min-height:100vh}
-#setup{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.setup-box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:540px;width:100%}
-.setup-box h1{color:#58a6ff;font-size:20px;margin-bottom:8px}
-.setup-box p{color:#8b949e;font-size:13px;margin-bottom:20px;line-height:1.5}
-label{display:block;font-size:13px;color:#cdd9e5;margin-bottom:4px;margin-top:12px}
-input[type=text]{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px}
-input[type=text]:focus{outline:none;border-color:#58a6ff}
-.btn{background:#238636;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;width:100%;margin-top:20px}
-.btn:hover{background:#2ea043}
-.btn-sm{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px}
+#pg-setup{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+#pg-app{display:none;padding:24px;max-width:1200px;margin:0 auto}
+.box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:560px;width:100%}
+h1{color:#58a6ff;font-size:20px;margin-bottom:6px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:24px}
+label{display:block;font-size:12px;color:#8b949e;margin-bottom:3px;margin-top:12px}
+input{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px}
+input:focus{outline:none;border-color:#58a6ff}
+.btn-primary{display:block;width:100%;padding:10px;margin-top:20px;background:#238636;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}
+.btn-primary:hover{background:#2ea043}
+.btn-sm{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer}
 .btn-sm:hover{background:#30363d}
-.error{color:#f85149;font-size:13px;margin-top:10px;min-height:18px}
+#msg{min-height:20px;font-size:13px;margin-top:12px;padding:8px;border-radius:6px;display:none}
+.msg-err{background:#1c0a0a;border:1px solid #f85149;color:#f85149}
+.msg-ok{background:#0a1c0a;border:1px solid #3fb950;color:#3fb950}
+.msg-info{background:#0a1118;border:1px solid #58a6ff;color:#58a6ff}
 .note{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:12px;font-size:12px;color:#8b949e;margin-top:16px;line-height:1.6}
-#app{display:none;padding:24px;max-width:1200px;margin:0 auto}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.header h1{color:#58a6ff;font-size:18px}
+.row2{display:flex;gap:8px}
+.row2>div{flex:1}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.hdr h1{font-size:18px}
 .hbtns{display:flex;gap:8px}
-#tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.ytab{padding:7px 16px;border-radius:6px;border:none;cursor:pointer;font-weight:600;font-size:13px;background:#21262d;color:#8b949e;transition:all .15s}
-.ytab.active,.ytab:focus{background:#1f6feb;color:#fff;outline:none}
-.ytab:hover:not(.active){background:#30363d;color:#cdd9e5}
-#modes{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-.mmode{padding:6px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;background:#21262d;color:#8b949e;transition:all .15s}
-.mmode.active{background:#1f6feb;color:#fff}
-.mmode:hover:not(.active){background:#30363d}
-#stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 18px;min-width:115px;text-align:center;flex:1}
-.cl{font-size:11px;color:#8b949e;margin-bottom:4px}
-.cv{font-size:26px;font-weight:700}
-.cs{font-size:10px;color:#484f58;margin-top:2px}
-.chart-wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;height:400px;position:relative}
-#toast{display:none;position:fixed;top:20px;right:20px;background:#161b22;border:1px solid #30363d;color:#58a6ff;padding:12px 20px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.5)}
-#errbar{background:#161b22;border:1px solid #f85149;color:#f85149;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;display:none}
-.row2{display:flex;gap:8px;flex-wrap:wrap}
-.row2 > div{flex:1;min-width:200px}
+#tabs,#modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab,.mode{padding:7px 15px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600;background:#21262d;color:#8b949e}
+.tab.on,.mode.on{background:#1f6feb;color:#fff}
+#stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 16px;text-align:center;flex:1;min-width:100px}
+.cv{font-size:24px;font-weight:700;margin:4px 0}
+.cl,.cs{font-size:11px;color:#8b949e}
+.cw{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;height:400px}
+#toast{position:fixed;top:20px;right:20px;background:#161b22;border:1px solid #388bfd;color:#58a6ff;padding:12px 20px;border-radius:8px;font-size:13px;display:none;z-index:999}
 </style>
 </head>
 <body>
 
-<div id="toast">⏳ Carregando...</div>
+<div id="toast" id="toast">⏳ Carregando...</div>
 
-<div id="setup">
-<div class="setup-box">
+<div id="pg-setup">
+<div class="box">
   <h1>📈 Densidade de Casos Ativos</h1>
-  <p>Registro Consultorias &mdash; Dashboard de Análise</p>
+  <p class="sub">Registro Consultorias — Dashboard de Análise</p>
 
   <label>Personal Access Token do Airtable</label>
-  <input type="text" id="inp_token" placeholder="patXXXXXX.XXXXXXXXXXXXXXXX" autocomplete="off" spellcheck="false">
+  <input id="f_token" type="text" placeholder="patXXXXXX.XXXXXXXXXXXXXXXX" autocomplete="off">
 
-  <div class="row2" style="margin-top:12px">
-    <div><label>Base ID</label><input type="text" id="inp_base" value="appio7ZC2rZahAJWl"></div>
-    <div><label>Table ID</label><input type="text" id="inp_table" value="tblYq7mKJNQRaiHA3"></div>
+  <div class="row2">
+    <div><label>Base ID</label><input id="f_base" value="appio7ZC2rZahAJWl"></div>
+    <div><label>Table ID</label><input id="f_table" value="tblYq7mKJNQRaiHA3"></div>
   </div>
   <div class="row2">
-    <div><label>Campo Início (field ID)</label><input type="text" id="inp_fstart" value="fldZUVJ76Q95Xu1Fi"></div>
-    <div><label>Campo Fim (field ID)</label><input type="text" id="inp_fend" value="fldgbvSx7kxfyYyNz"></div>
+    <div><label>Campo Início</label><input id="f_start" value="fldZUVJ76Q95Xu1Fi"></div>
+    <div><label>Campo Fim</label><input id="f_end" value="fldgbvSx7kxfyYyNz"></div>
   </div>
 
-  <div id="setupErr" class="error"></div>
-  <button class="btn" id="btnLoad">Carregar Dados</button>
+  <div id="msg"></div>
+  <button class="btn-primary" onclick="doLoad()">Carregar Dados</button>
 
   <div class="note">
-    🔒 O token é salvo apenas no seu navegador (localStorage). Nenhum dado de pacientes é enviado ao GitHub ou a servidores externos.<br>
-    🔄 Clique em <em>Atualizar</em> a qualquer momento para buscar os dados mais recentes.
+    🔒 Token salvo apenas no seu navegador (localStorage). Nenhum dado de pacientes é enviado ao GitHub.<br>
+    🔄 Clique em <em>Atualizar</em> para buscar os dados mais recentes do Airtable.
   </div>
 </div>
 </div>
 
-<div id="app">
-  <div class="header">
-    <h1>📈 Casos Ativos Simultâneos &mdash; Registro Consultorias</h1>
+<div id="pg-app">
+  <div class="hdr">
+    <h1>📈 Casos Ativos Simultâneos</h1>
     <div class="hbtns">
-      <button class="btn-sm" id="btnRefresh">🔄 Atualizar</button>
-      <button class="btn-sm" id="btnConfig">⚙️ Configurações</button>
+      <button class="btn-sm" onclick="doRefresh()">🔄 Atualizar</button>
+      <button class="btn-sm" onclick="showSetup()">⚙️ Config</button>
     </div>
   </div>
-  <div id="errbar"></div>
   <div id="tabs"></div>
   <div id="modes">
-    <button class="mmode active" data-mode="daily">Diário</button>
-    <button class="mmode" data-mode="weekly">Semanal</button>
-    <button class="mmode" data-mode="monthly_max">Mensal (Máx)</button>
-    <button class="mmode" data-mode="monthly_avg">Mensal (Média)</button>
-    <button class="mmode" data-mode="monthly_med">Mensal (Mediana)</button>
+    <button class="mode on" data-m="daily" onclick="setMode(this)">Diário</button>
+    <button class="mode" data-m="weekly" onclick="setMode(this)">Semanal</button>
+    <button class="mode" data-m="monthly_max" onclick="setMode(this)">Mensal (Máx)</button>
+    <button class="mode" data-m="monthly_avg" onclick="setMode(this)">Mensal (Média)</button>
+    <button class="mode" data-m="monthly_med" onclick="setMode(this)">Mensal (Mediana)</button>
   </div>
   <div id="stats"></div>
-  <div class="chart-wrap"><canvas id="myChart"></canvas></div>
+  <div class="cw"><canvas id="cv"></canvas></div>
 </div>
 
 <script>
-const S = { year:'total', mode:'daily' };
-let DATA = null;
+var G = { year:'total', mode:'daily', data:null };
 
-// ── Init ─────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  const t = localStorage.getItem('rc_token');
-  if (t) document.getElementById('inp_token').value = t;
-  ['inp_base','inp_table','inp_fstart','inp_fend'].forEach(id => {
-    const v = localStorage.getItem('rc_' + id);
-    if (v) document.getElementById(id).value = v;
-  });
-  document.getElementById('btnLoad').addEventListener('click', startApp);
-  document.getElementById('btnRefresh').addEventListener('click', refreshData);
-  document.getElementById('btnConfig').addEventListener('click', showSetup);
-  attachModeListeners();
-});
+// Restore saved values
+(function(){
+  var t=localStorage.getItem('rc_tok'); if(t) document.getElementById('f_token').value=t;
+  var b=localStorage.getItem('rc_base'); if(b) document.getElementById('f_base').value=b;
+  var tb=localStorage.getItem('rc_tbl'); if(tb) document.getElementById('f_table').value=tb;
+  var fs=localStorage.getItem('rc_fs'); if(fs) document.getElementById('f_start').value=fs;
+  var fe=localStorage.getItem('rc_fe'); if(fe) document.getElementById('f_end').value=fe;
+})();
 
-function showSetup() {
-  document.getElementById('setup').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
+function showMsg(txt, type) {
+  var el=document.getElementById('msg');
+  el.textContent=txt; el.className='msg-'+type; el.style.display=txt?'block':'none';
 }
 
-function getConfig() {
+function showToast(txt) {
+  var el=document.getElementById('toast');
+  el.textContent=txt; el.style.display=txt?'block':'none';
+}
+
+function showSetup() {
+  document.getElementById('pg-setup').style.display='flex';
+  document.getElementById('pg-app').style.display='none';
+}
+
+function getCfg() {
   return {
-    token:  document.getElementById('inp_token').value.trim(),
-    baseId: document.getElementById('inp_base').value.trim(),
-    tableId:document.getElementById('inp_table').value.trim(),
-    fStart: document.getElementById('inp_fstart').value.trim(),
-    fEnd:   document.getElementById('inp_fend').value.trim()
+    tok: document.getElementById('f_token').value.trim(),
+    base: document.getElementById('f_base').value.trim(),
+    tbl: document.getElementById('f_table').value.trim(),
+    fs: document.getElementById('f_start').value.trim(),
+    fe: document.getElementById('f_end').value.trim()
   };
 }
 
-async function startApp() {
-  const c = getConfig();
-  const errEl = document.getElementById('setupErr');
-  if (!c.token || !c.baseId || !c.tableId || !c.fStart || !c.fEnd) {
-    errEl.textContent = 'Preencha todos os campos.'; return;
-  }
-  errEl.textContent = '';
-  localStorage.setItem('rc_token', c.token);
-  localStorage.setItem('rc_inp_base', c.baseId);
-  localStorage.setItem('rc_inp_table', c.tableId);
-  localStorage.setItem('rc_inp_fstart', c.fStart);
-  localStorage.setItem('rc_inp_fend', c.fEnd);
-  await loadData(c);
+function doLoad() {
+  var c=getCfg();
+  if(!c.tok){showMsg('Informe o token do Airtable.','err');return;}
+  if(!c.base||!c.tbl||!c.fs||!c.fe){showMsg('Preencha todos os campos.','err');return;}
+  localStorage.setItem('rc_tok',c.tok);
+  localStorage.setItem('rc_base',c.base);
+  localStorage.setItem('rc_tbl',c.tbl);
+  localStorage.setItem('rc_fs',c.fs);
+  localStorage.setItem('rc_fe',c.fe);
+  showMsg('','info');
+  run(c);
 }
 
-async function refreshData() {
-  const c = getConfig();
-  if (!c.token) { showSetup(); return; }
-  await loadData(c);
+function doRefresh() {
+  var c=getCfg();
+  if(!c.tok){showSetup();return;}
+  run(c);
 }
 
-// ── Data loading ──────────────────────────────────────────────────────
-async function loadData(c) {
-  const toast = document.getElementById('toast');
-  const errbar = document.getElementById('errbar');
-  toast.style.display = 'block';
-  toast.textContent = '⏳ Carregando dados do Airtable...';
-  errbar.style.display = 'none';
-
-  try {
-    const records = await fetchAll(c);
-    DATA = process(records);
-    document.getElementById('setup').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+function run(c) {
+  showToast('⏳ Carregando dados do Airtable...');
+  fetchAll(c).then(function(records){
+    G.data=process(records);
+    document.getElementById('pg-setup').style.display='none';
+    document.getElementById('pg-app').style.display='block';
     buildTabs();
-    buildStats(S.year);
+    buildStats(G.year);
     drawChart();
-    toast.style.display = 'none';
-  } catch(e) {
-    toast.style.display = 'none';
-    const msg = 'Erro: ' + e.message;
-    errbar.textContent = msg;
-    errbar.style.display = 'block';
-    document.getElementById('setupErr').textContent = msg;
-    document.getElementById('setup').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
+    showToast('');
+  }).catch(function(e){
+    showToast('');
+    showMsg('Erro: '+e.message,'err');
+    document.getElementById('pg-setup').style.display='flex';
+  });
 }
 
-async function fetchAll(c) {
-  const today = new Date().toISOString().substring(0,10);
-  const records = [];
-  let offset = null;
-  let page = 0;
-
-  do {
-    page++;
-    let url = 'https://api.airtable.com/v0/' + c.baseId + '/' + c.tableId
-      + '?fields[]=' + encodeURIComponent(c.fStart)
-      + '&fields[]=' + encodeURIComponent(c.fEnd)
-      + '&pageSize=100';
-    if (offset) url += '&offset=' + encodeURIComponent(offset);
-
-    const resp = await fetch(url, {
-      headers: { 'Authorization': 'Bearer ' + c.token }
-    });
-
-    if (!resp.ok) {
-      let errMsg = 'HTTP ' + resp.status;
-      try {
-        const j = await resp.json();
-        if (j.error && j.error.message) errMsg = j.error.message;
-        else if (j.error && j.error.type) errMsg = j.error.type + ': ' + errMsg;
-      } catch(e2) {}
-      throw new Error(errMsg);
-    }
-
-    const data = await resp.json();
-
-    for (const r of (data.records || [])) {
-      const sf = r.fields[c.fStart];
-      const ef = r.fields[c.fEnd];
-      if (!sf) continue;
-      const s = String(sf).substring(0,10);
-      const e = ef ? String(ef).substring(0,10) : today;
-      if (s <= e) records.push({ start: s, end: e });
-    }
-
-    offset = data.offset || null;
-  } while (offset);
-
-  if (records.length === 0) throw new Error('Nenhum registro válido encontrado. Verifique os IDs dos campos.');
-  return records;
+function fetchAll(c) {
+  var today=new Date().toISOString().substring(0,10);
+  var records=[];
+  function page(offset) {
+    var url='https://api.airtable.com/v0/'+c.base+'/'+c.tbl
+      +'?fields[]='+encodeURIComponent(c.fs)
+      +'&fields[]='+encodeURIComponent(c.fe)
+      +'&pageSize=100'
+      +(offset?'&offset='+encodeURIComponent(offset):'');
+    return fetch(url,{headers:{'Authorization':'Bearer '+c.tok}})
+      .then(function(r){
+        if(!r.ok) return r.json().then(function(j){
+          throw new Error((j.error&&j.error.message)||'HTTP '+r.status);
+        });
+        return r.json();
+      })
+      .then(function(d){
+        (d.records||[]).forEach(function(r){
+          var s=r.fields[c.fs], e=r.fields[c.fe];
+          if(!s) return;
+          s=String(s).substring(0,10);
+          e=e?String(e).substring(0,10):today;
+          if(s<=e) records.push({start:s,end:e});
+        });
+        if(d.offset) return page(d.offset);
+        if(records.length===0) throw new Error('Nenhum registro válido. Verifique os IDs dos campos.');
+        return records;
+      });
+  }
+  return page(null);
 }
 
-// ── Processing ─────────────────────────────────────────────────────────
-function process(records) {
-  const today = new Date().toISOString().substring(0,10);
-  let minD = records[0].start, maxD = records[0].end;
-  records.forEach(r => {
-    if (r.start < minD) minD = r.start;
-    if (r.end > maxD) maxD = r.end;
+function process(recs) {
+  var today=new Date().toISOString().substring(0,10);
+  var minD=recs[0].start, maxD=recs[0].end;
+  recs.forEach(function(r){if(r.start<minD)minD=r.start;if(r.end>maxD)maxD=r.end;});
+  if(maxD>today)maxD=today;
+  var days=[],d=new Date(minD+'T12:00:00Z'),last=new Date(maxD+'T12:00:00Z');
+  while(d<=last){days.push(d.toISOString().substring(0,10));d.setUTCDate(d.getUTCDate()+1);}
+  var idx={};days.forEach(function(day,i){idx[day]=i;});
+  var counts=new Array(days.length).fill(0);
+  recs.forEach(function(r){
+    var si=idx[r.start],ei=idx[r.end];
+    if(si===undefined||ei===undefined)return;
+    for(var i=si;i<=ei;i++)counts[i]++;
   });
-  if (maxD > today) maxD = today;
-
-  const days = [];
-  const d = new Date(minD + 'T12:00:00Z');
-  const last = new Date(maxD + 'T12:00:00Z');
-  while (d <= last) { days.push(d.toISOString().substring(0,10)); d.setUTCDate(d.getUTCDate()+1); }
-
-  const counts = new Array(days.length).fill(0);
-  const dayIdx = {};
-  days.forEach((day, i) => { dayIdx[day] = i; });
-
-  records.forEach(r => {
-    const si = dayIdx[r.start];
-    const ei = dayIdx[r.end];
-    if (si === undefined || ei === undefined) return;
-    for (let i = si; i <= ei; i++) counts[i]++;
-  });
-
-  function med(arr) {
-    if (!arr.length) return 0;
-    const s = [...arr].sort((a,b) => a-b), m = Math.floor(s.length/2);
-    return s.length%2 === 0 ? Math.round((s[m-1]+s[m])/2*10)/10 : s[m];
+  function med(a){if(!a.length)return 0;var s=[].concat(a).sort(function(x,y){return x-y;}),m=Math.floor(s.length/2);return s.length%2===0?Math.round((s[m-1]+s[m])/2*10)/10:s[m];}
+  function agg(ds,cs){
+    var wL=[],wM=[];
+    for(var i=0;i<ds.length;i+=7){wL.push(ds[i]);var ch=cs.slice(i,i+7);wM.push(Math.max.apply(null,ch));}
+    var mm={};ds.forEach(function(d,i){var k=d.substring(0,7);if(!mm[k])mm[k]=[];mm[k].push(cs[i]);});
+    var mL=Object.keys(mm).sort();
+    return{wL:wL,wM:wM,mL:mL,mMx:mL.map(function(k){return Math.max.apply(null,mm[k]);}),
+      mAv:mL.map(function(k){return Math.round(mm[k].reduce(function(a,b){return a+b;},0)/mm[k].length*10)/10;}),
+      mMd:mL.map(function(k){return med(mm[k]);})};
   }
-
-  function agg(ds, cs) {
-    const wL=[], wM=[];
-    for (let i=0; i<ds.length; i+=7) { wL.push(ds[i]); wM.push(Math.max(...cs.slice(i,i+7))); }
-    const mm={};
-    ds.forEach((d,i) => { const k=d.substring(0,7); if(!mm[k]) mm[k]=[]; mm[k].push(cs[i]); });
-    const mL=Object.keys(mm).sort();
-    return { wL, wM, mL, mMax:mL.map(k=>Math.max(...mm[k])), mAvg:mL.map(k=>Math.round(mm[k].reduce((a,b)=>a+b,0)/mm[k].length*10)/10), mMed:mL.map(k=>med(mm[k])) };
-  }
-
-  const ga = agg(days, counts);
-  const years = [...new Set(days.map(d=>d.substring(0,4)))].sort();
-  const yd = {};
-
-  years.forEach(yr => {
-    const idx = days.map((d,i)=>d.startsWith(yr)?i:-1).filter(i=>i>=0);
-    if (!idx.length) return;
-    const yDs = idx.map(i=>days[i]), yCs = idx.map(i=>counts[i]);
-    const ya = agg(yDs, yCs);
-    const yRec = records.filter(r => r.start.substring(0,4)===yr || r.end.substring(0,4)===yr || (r.start<yr+'-01-01'&&r.end>yr+'-12-31')).length;
-    yd[yr] = { labels:yDs, dc:yCs, ...ya, mx:Math.max(...yCs), avg:Math.round(yCs.reduce((a,b)=>a+b,0)/yCs.length*10)/10, med:med(yCs), days:yDs.length, recs:yRec };
+  var ga=agg(days,counts);
+  var years=[...new Set(days.map(function(d){return d.substring(0,4);}))].sort();
+  var yd={};
+  years.forEach(function(yr){
+    var ii=days.map(function(d,i){return d.startsWith(yr)?i:-1;}).filter(function(i){return i>=0;});
+    if(!ii.length)return;
+    var yDs=ii.map(function(i){return days[i];}),yCs=ii.map(function(i){return counts[i];});
+    var ya=agg(yDs,yCs);
+    var yr2=yr;
+    var yR=recs.filter(function(r){return r.start.substring(0,4)===yr2||r.end.substring(0,4)===yr2||(r.start<yr2+'-01-01'&&r.end>yr2+'-12-31');}).length;
+    yd[yr]={labels:yDs,dc:yCs,ya:ya,mx:Math.max.apply(null,yCs),av:Math.round(yCs.reduce(function(a,b){return a+b;},0)/yCs.length*10)/10,md:med(yCs),days:yDs.length,recs:yR};
   });
-
-  return { days, counts, ...ga, gMx:Math.max(...counts), gAvg:Math.round(counts.reduce((a,b)=>a+b,0)/counts.length*10)/10, gMed:med(counts), totalDays:days.length, totalRecs:records.length, years, yd };
+  var gMx=Math.max.apply(null,counts),gAv=Math.round(counts.reduce(function(a,b){return a+b;},0)/counts.length*10)/10;
+  return{days:days,counts:counts,ga:ga,gMx:gMx,gAv:gAv,gMd:med(counts),tDays:days.length,tRecs:recs.length,years:years,yd:yd};
 }
 
-// ── UI ─────────────────────────────────────────────────────────────────
-function buildTabs() {
-  const el = document.getElementById('tabs');
-  el.innerHTML = '';
-  [...DATA.years, 'total'].forEach(yr => {
-    const b = document.createElement('button');
-    b.className = 'ytab' + (yr===S.year?' active':'');
-    b.dataset.year = yr;
-    b.textContent = yr==='total' ? 'Período Total' : yr;
-    b.addEventListener('click', function() {
-      S.year = this.dataset.year;
-      el.querySelectorAll('.ytab').forEach(x=>x.classList.remove('active'));
-      this.classList.add('active');
-      buildStats(S.year);
-      drawChart();
-    });
+function buildTabs(){
+  var el=document.getElementById('tabs');
+  el.innerHTML='';
+  var yrs=G.data.years.concat(['total']);
+  yrs.forEach(function(yr){
+    var b=document.createElement('button');
+    b.className='tab'+(yr===G.year?' on':'');
+    b.dataset.y=yr;
+    b.textContent=yr==='total'?'Período Total':yr;
+    b.setAttribute('onclick','setYear(this)');
     el.appendChild(b);
   });
 }
 
-function attachModeListeners() {
-  document.querySelectorAll('.mmode').forEach(b => {
-    b.addEventListener('click', function() {
-      S.mode = this.dataset.mode;
-      document.querySelectorAll('.mmode').forEach(x=>x.classList.remove('active'));
-      this.classList.add('active');
-      if (DATA) drawChart();
-    });
-  });
+function setYear(btn){
+  G.year=btn.dataset.y;
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  buildStats(G.year);
+  drawChart();
 }
 
-function buildStats(yr) {
-  const el = document.getElementById('stats');
-  let mx,avg,med,recs,dys,rl;
-  if (yr==='total') { mx=DATA.gMx; avg=DATA.gAvg; med=DATA.gMed; recs=DATA.totalRecs; dys=DATA.totalDays; rl='Total Registros'; }
-  else { const d=DATA.yd[yr]; mx=d.mx; avg=d.avg; med=d.med; recs=d.recs; dys=d.days; rl='Registros Ativos'; }
-  const c=(l,v,col,s)=>'<div class="card"><div class="cl">'+l+'</div><div class="cv" style="color:'+col+'">'+v+'</div><div class="cs">'+s+'</div></div>';
-  el.innerHTML = c('Pico Máximo',mx,'#ff5722','casos/dia')+c('Média Diária',avg,'#388bfd','casos/dia')+c('Mediana Diária',med,'#e91e63','casos/dia')+c(rl,recs,'#3fb950','no período')+c('Dias Analisados',dys,'#bc8cff','dias');
+function setMode(btn){
+  G.mode=btn.dataset.m;
+  document.querySelectorAll('.mode').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  if(G.data)drawChart();
 }
 
-function drawChart() {
-  if (!DATA) return;
-  const yr=S.year, mode=S.mode;
-  const d = yr==='total' ? null : DATA.yd[yr];
-  const src = {
-    daily:      { l:d?d.labels:DATA.days,  v:d?d.dc:DATA.counts,  lbl:'Casos ativos por dia', col:'rgba(56,139,253,0.8)' },
-    weekly:     { l:d?d.wL:DATA.wL,        v:d?d.wM:DATA.wM,      lbl:'Máx semanal',      col:'rgba(0,188,212,0.8)' },
-    monthly_max:{ l:d?d.mL:DATA.mL,        v:d?d.mMax:DATA.mMax,  lbl:'Máx mensal',        col:'rgba(255,87,34,0.8)' },
-    monthly_avg:{ l:d?d.mL:DATA.mL,        v:d?d.mAvg:DATA.mAvg,  lbl:'Média mensal',      col:'rgba(76,175,80,0.8)' },
-    monthly_med:{ l:d?d.mL:DATA.mL,        v:d?d.mMed:DATA.mMed,  lbl:'Mediana mensal',       col:'rgba(233,30,99,0.8)' }
+function buildStats(yr){
+  var el=document.getElementById('stats');
+  var mx,av,md,rc,dy,rl;
+  if(yr==='total'){mx=G.data.gMx;av=G.data.gAv;md=G.data.gMd;rc=G.data.tRecs;dy=G.data.tDays;rl='Total Registros';}
+  else{var d=G.data.yd[yr];mx=d.mx;av=d.av;md=d.md;rc=d.recs;dy=d.days;rl='Registros Ativos';}
+  function c(l,v,col,s){return '<div class="card"><div class="cl">'+l+'</div><div class="cv" style="color:'+col+'">'+v+'</div><div class="cs">'+s+'</div></div>';}
+  el.innerHTML=c('Pico Máximo',mx,'#ff5722','casos/dia')+c('Média Diária',av,'#388bfd','casos/dia')+c('Mediana Diária',md,'#e91e63','casos/dia')+c(rl,rc,'#3fb950','no período')+c('Dias Analisados',dy,'#bc8cff','dias');
+}
+
+function drawChart(){
+  if(!G.data)return;
+  var yr=G.year,mode=G.mode;
+  var d=yr==='total'?null:G.data.yd[yr];
+  var ga=G.data.ga;
+  var ya=d?d.ya:null;
+  var src={
+    daily:     {l:d?d.labels:G.data.days,   v:d?d.dc:G.data.counts,  lbl:'Casos ativos por dia',  col:'rgba(56,139,253,0.8)'},
+    weekly:    {l:d?ya.wL:ga.wL,             v:d?ya.wM:ga.wM,         lbl:'Máx semanal',       col:'rgba(0,188,212,0.8)'},
+    monthly_max:{l:d?ya.mL:ga.mL,            v:d?ya.mMx:ga.mMx,       lbl:'Máx mensal',        col:'rgba(255,87,34,0.8)'},
+    monthly_avg:{l:d?ya.mL:ga.mL,            v:d?ya.mAv:ga.mAv,       lbl:'Média mensal',      col:'rgba(76,175,80,0.8)'},
+    monthly_med:{l:d?ya.mL:ga.mL,            v:d?ya.mMd:ga.mMd,       lbl:'Mediana mensal',        col:'rgba(233,30,99,0.8)'}
   }[mode];
-
-  const ex = Chart.getChart('myChart');
-  if (ex) ex.destroy();
-
-  new Chart(document.getElementById('myChart'), {
+  var ex=Chart.getChart('cv');if(ex)ex.destroy();
+  new Chart(document.getElementById('cv'),{
     type:'bar',
-    data:{ labels:src.l, datasets:[{ label:src.lbl, data:src.v, backgroundColor:src.col, borderRadius:3, borderSkipped:false }] },
-    options:{
-      responsive:true, maintainAspectRatio:false, animation:false,
-      plugins:{ legend:{ labels:{ color:'#cdd9e5', font:{ size:11 } } } },
-      scales:{
-        x:{ ticks:{ color:'#8b949e', font:{ size:9 }, maxRotation:45, maxTicksLimit: mode==='daily'?30:20 }, grid:{ color:'#21262d' } },
-        y:{ min:0, ticks:{ color:'#8b949e', font:{ size:10 } }, grid:{ color:'#21262d' } }
-      }
-    }
+    data:{labels:src.l,datasets:[{label:src.lbl,data:src.v,backgroundColor:src.col,borderRadius:3,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{labels:{color:'#cdd9e5',font:{size:11}}}},
+      scales:{x:{ticks:{color:'#8b949e',font:{size:9},maxRotation:45,maxTicksLimit:mode==='daily'?30:20},grid:{color:'#21262d'}},
+              y:{min:0,ticks:{color:'#8b949e',font:{size:10}},grid:{color:'#21262d'}}}}
   });
 }
 </script>
