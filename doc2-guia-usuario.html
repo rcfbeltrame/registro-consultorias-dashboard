@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Documento 2 - Como Usar o Dashboard na Sua Base do Airtable</title>
+<style>
+body{font-family:Arial,sans-serif;font-size:12.5px;line-height:1.7;color:#1e293b;max-width:820px;margin:0 auto;padding:40px 48px}
+h1{font-size:22px;color:#1e1b4b;margin-bottom:4px}
+.sub{font-size:11px;color:#6b7280;border-bottom:2px solid #e0e7ff;padding-bottom:12px;margin-bottom:28px}
+h2{font-size:14px;font-weight:bold;color:#fff;background:#4f46e5;padding:7px 14px;margin:28px 0 10px;border-radius:6px}
+h3{font-size:12.5px;font-weight:bold;color:#1e1b4b;margin:16px 0 6px;border-bottom:1px solid #e0e7ff;padding-bottom:3px}
+p{margin-bottom:8px;color:#374151}
+ul,ol{margin:6px 0 12px 20px}
+li{margin-bottom:5px;color:#374151}
+strong{color:#1e1b4b}
+code{font-family:Consolas,monospace;font-size:11px;background:#f0f0ff;border:1px solid #c7d2fe;border-radius:3px;padding:2px 6px;color:#4f46e5;word-break:break-all}
+.box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 18px;margin:12px 0}
+.tip{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px}
+.warn{background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px}
+.step{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start}
+.snum{min-width:32px;height:32px;background:#4f46e5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;flex-shrink:0;margin-top:1px}
+.step-content{flex:1}
+.step-content strong{display:block;margin-bottom:4px;font-size:13px;color:#1e1b4b}
+img-placeholder{display:block;background:#f1f5f9;border:2px dashed #cbd5e1;border-radius:6px;text-align:center;padding:20px;color:#94a3b8;font-size:11px;margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:11.5px}
+th{background:#4f46e5;color:#fff;font-weight:bold;text-align:left;padding:7px 10px;border:1px solid #4338ca}
+td{padding:6px 10px;border:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.url-box{background:#1e1b4b;color:#a5b4fc;font-family:Consolas,monospace;font-size:12px;padding:12px 16px;border-radius:8px;margin:10px 0;word-break:break-all;letter-spacing:.3px}
+footer{margin-top:40px;border-top:1px solid #e2e8f0;padding-top:12px;font-size:10px;color:#94a3b8;text-align:center}
+@media print{body{padding:20px 24px}.step{break-inside:avoid}h2{break-before:avoid}}
+</style>
+</head>
+<body>
+
+<h1>Como Usar o Dashboard de Casos Ativos na Sua Base do Airtable</h1>
+<p class="sub">Documento 2 &middot; Guia Completo para Novos Usuarios &middot; Gerado em 07/05/2025</p>
+
+<h2>O Que e Este Dashboard?</h2>
+<p>Este dashboard e uma ferramenta web gratuita que se conecta a sua base do Airtable e gera automaticamente graficos mostrando <strong>quantos casos estiveram ativos simultaneamente em cada data</strong>. Ela calcula isso com base em duas colunas de data: uma de inicio e uma de encerramento de cada registro.</p>
+<p>Voce pode usar para acompanhar consultorias, pacientes, projetos, atendimentos ou qualquer tipo de registro que tenha uma data de inicio e uma data de fim.</p>
+<div class="url-box">Link do Dashboard: https://rcfbeltrame.github.io/registro-consultorias-dashboard/</div>
+<div class="tip">&#10003; Nao e necessario instalar nada. Basta abrir o link no navegador. Funciona no Chrome, Firefox, Edge e Safari.</div>
+
+<h2>O Que Voce Vai Precisar</h2>
+<ul>
+<li>Uma conta no <strong>Airtable</strong> com uma base contendo registros com duas colunas de data (inicio e fim)</li>
+<li>Um <strong>Token de Acesso Pessoal</strong> do Airtable (instruções abaixo)</li>
+<li>Os <strong>IDs</strong> da sua base e tabela no Airtable (instrucoes abaixo)</li>
+<li>Um navegador moderno (Chrome, Firefox, Edge ou Safari)</li>
+</ul>
+
+<h2>Passo 1 — Criar um Token de Acesso no Airtable</h2>
+<p>O token e uma senha especial que permite ao dashboard ler os dados da sua base. Ela e armazenada somente no seu navegador e nunca e enviada para nenhum outro servidor.</p>
+
+<div class="step">
+<div class="snum">1</div>
+<div class="step-content">
+<strong>Acesse o Airtable e va para as configuracoes de token</strong>
+Abra o navegador e acesse: <code>https://airtable.com/create/tokens/new</code><br>
+Voce precisara estar logado na sua conta Airtable.
+</div>
+</div>
+
+<div class="step">
+<div class="snum">2</div>
+<div class="step-content">
+<strong>Nomeie o token</strong>
+No campo "Name your token", escreva um nome como <code>dashboard-casos-ativos</code> (qualquer nome que voce reconheca).
+</div>
+</div>
+
+<div class="step">
+<div class="snum">3</div>
+<div class="step-content">
+<strong>Configure as permissoes (Scopes)</strong>
+Em "Add a scope", adicione a permissao: <code>data.records:read</code><br>
+Esta e a unica permissao necessaria — apenas leitura dos registros.
+</div>
+</div>
+
+<div class="step">
+<div class="snum">4</div>
+<div class="step-content">
+<strong>Selecione a base de dados</strong>
+Em "Add a base", selecione a base do Airtable que voce quer visualizar no dashboard. Voce pode adicionar mais de uma base se precisar.
+</div>
+</div>
+
+<div class="step">
+<div class="snum">5</div>
+<div class="step-content">
+<strong>Crie e copie o token</strong>
+Clique em "Create token". O token sera exibido uma unica vez — ele tem o formato <code>patXXXXXXXX.XXXXX...</code><br>
+<strong>Copie e salve em lugar seguro.</strong> Ele nao sera exibido novamente.
+</div>
+</div>
+
+<div class="warn">&#9888; Nao compartilhe seu token com outras pessoas. Quem tiver o token pode ler os dados da sua base.</div>
+
+<h2>Passo 2 — Encontrar os IDs da Sua Base e Tabela</h2>
+<p>O Airtable identifica cada base e tabela com um codigo unico. Voce precisa desses codigos para configurar o dashboard.</p>
+
+<div class="step">
+<div class="snum">1</div>
+<div class="step-content">
+<strong>Abra sua base no Airtable e olhe a URL do navegador</strong>
+A URL tem o seguinte formato:<br>
+<code>https://airtable.com/appo7XXXXXXXX/tblYYYYYYYYY/viwZZZZZZZZZ</code>
+</div>
+</div>
+
+<div class="step">
+<div class="snum">2</div>
+<div class="step-content">
+<strong>Identifique cada parte da URL</strong>
+<table>
+<tr><th>Parte da URL</th><th>Comeca com</th><th>Nome</th><th>Exemplo</th></tr>
+<tr><td>ID da Base</td><td><code>app</code></td><td>Base ID</td><td><code>appio7ZC2rZahAJWl</code></td></tr>
+<tr><td>ID da Tabela</td><td><code>tbl</code></td><td>Table ID</td><td><code>tblYq7mKJNQRaiHA3</code></td></tr>
+<tr><td>ID da View</td><td><code>viw</code></td><td>View ID</td><td><code>viwxn35nLyYeQpk89</code></td></tr>
+</table>
+</div>
+</div>
+
+<div class="step">
+<div class="snum">3</div>
+<div class="step-content">
+<strong>Anote os nomes das duas colunas de data</strong>
+Voce precisara do nome exato (com acentos, maiusculas e minusculas) das colunas que representam:<br>
+&bull; <strong>Data de inicio</strong> do registro (ex: "Data de Entrada", "Inicio", "Data Avaliacao")<br>
+&bull; <strong>Data de encerramento</strong> do registro (ex: "Data de Saida", "Fim", "Data Alta") &mdash; registros sem data de fim serao tratados como ainda ativos.
+</div>
+</div>
+
+<div class="tip">&#128161; Dica: O nome da view e opcional. Se voce quiser usar todos os registros da tabela, basta deixar em branco ou usar o nome da view principal. Se quiser filtrar por uma view especifica do Airtable, use o ID da view (comeca com viw).</div>
+
+<h2>Passo 3 — Configurar o Dashboard</h2>
+
+<div class="step">
+<div class="snum">1</div>
+<div class="step-content">
+<strong>Abra o dashboard no navegador</strong>
+Acesse: <code>https://rcfbeltrame.github.io/registro-consultorias-dashboard/</code><br>
+Na primeira vez, voce vera um formulario de configuracao.
+</div>
+</div>
+
+<div class="step">
+<div class="snum">2</div>
+<div class="step-content">
+<strong>Preencha os campos do formulario</strong>
+<table>
+<tr><th>Campo do formulario</th><th>O que colocar</th></tr>
+<tr><td>Token de Acesso</td><td>O token que voce copiou no Passo 1 (comeca com pat...)</td></tr>
+<tr><td>ID da Base</td><td>O codigo que comeca com app... (da URL do Airtable)</td></tr>
+<tr><td>ID da Tabela</td><td>O codigo que comeca com tbl... (da URL do Airtable)</td></tr>
+<tr><td>ID/Nome da View</td><td>O codigo que comeca com viw... ou o nome da view (opcional)</td></tr>
+<tr><td>Campo de Inicio</td><td>Nome exato da coluna de data de inicio (ex: "Data Avaliacao")</td></tr>
+<tr><td>Campo de Fim</td><td>Nome exato da coluna de data de encerramento (ex: "Data Alta")</td></tr>
+</table>
+</div>
+</div>
+
+<div class="step">
+<div class="snum">3</div>
+<div class="step-content">
+<strong>Clique em "Carregar Dados"</strong>
+O dashboard ira buscar todos os registros da sua base e gerar os graficos automaticamente. Isso pode levar alguns segundos dependendo da quantidade de registros.
+</div>
+</div>
+
+<div class="tip">&#10003; Suas configuracoes sao salvas automaticamente no seu navegador. Na proxima vez que abrir o dashboard, os dados ja estarao pre-preenchidos — basta clicar em "Carregar Dados".</div>
+
+<h2>Passo 4 — Usando o Dashboard</h2>
+
+<h3>Navegando pelos periodos</h3>
+<p>Na parte superior do dashboard, ha abas com os <strong>anos detectados nos seus dados</strong> (ex: 2023, 2024, 2025) e uma aba chamada <strong>"Periodo Total"</strong> que mostra todos os anos juntos. Clique em qualquer aba para ver apenas aquele periodo.</p>
+
+<h3>Tipos de visualizacao</h3>
+<p>Para cada periodo, voce pode escolher como visualizar os dados:</p>
+<table>
+<tr><th>Visualizacao</th><th>O que mostra</th></tr>
+<tr><td>Diario</td><td>Quantos casos estavam ativos em cada dia. No "Periodo Total", a curva e suavizada com media de 14 dias para facilitar a leitura.</td></tr>
+<tr><td>Semanal</td><td>O pico de casos ativos em cada semana</td></tr>
+<tr><td>Mensal (Max)</td><td>O pico maximo de casos em cada mes</td></tr>
+<tr><td>Mensal (Media)</td><td>A media diaria de casos em cada mes</td></tr>
+<tr><td>Mensal (Mediana)</td><td>A mediana diaria de casos em cada mes</td></tr>
+</table>
+
+<h3>Cards de estatisticas</h3>
+<p>Acima do grafico, ha cartoes com as principais metricas do periodo selecionado: pico de casos, media diaria, mediana diaria, total de registros e casos ativos hoje.</p>
+
+<h3>Baixando os graficos</h3>
+<p>Cada grafico tem um botao de download (icone de seta para baixo). Clique nele para salvar o grafico como imagem PNG com fundo branco, pronta para usar em apresentacoes ou relatorios.</p>
+
+<h2>Solucao de Problemas Comuns</h2>
+<table>
+<tr><th>Problema</th><th>O que fazer</th></tr>
+<tr><td>"Nenhum registro valido. Verifique os IDs dos campos."</td><td>Os nomes das colunas de data estao errados. Verifique no Airtable o nome exato (com acentos e maiusculas) e corrija no formulario.</td></tr>
+<tr><td>"Erro ao carregar dados" ou pagina em branco</td><td>Verifique se o token esta correto e se a base selecionada na criacao do token e a mesma do ID informado.</td></tr>
+<tr><td>Os dados nao atualizam</td><td>Clique no botao "Recarregar" na barra superior para buscar os dados mais recentes do Airtable.</td></tr>
+<tr><td>Quero alterar as configuracoes</td><td>Clique em "Alterar Configuracoes" na barra superior para editar token, base ou campos.</td></tr>
+<tr><td>Um colega quer usar a mesma ferramenta</td><td>Basta enviar o link. Na primeira abertura, ele configura com o token e base dele. As configuracoes de cada pessoa ficam salvas separadamente no navegador de cada um.</td></tr>
+</table>
+
+<h2>Privacidade e Seguranca</h2>
+<div class="box">
+<ul>
+<li>O token e as configuracoes ficam armazenados <strong>apenas no seu navegador</strong> (localStorage). Nenhum dado e enviado para servidores externos.</li>
+<li>O codigo do dashboard e publico no GitHub, mas os dados da sua base nunca sao acessados por terceiros &mdash; a conexao e feita diretamente do seu navegador para o Airtable.</li>
+<li>Voce pode revogar o token a qualquer momento nas configuracoes do Airtable, sem afetar outros usuarios.</li>
+<li>Cada usuario precisa criar e usar o proprio token.</li>
+</ul>
+</div>
+
+<h2>Referencia Rapida — Dados da Configuracao de Exemplo</h2>
+<div class="box">
+<p>Esta e a configuracao usada para a base original deste dashboard (apenas para referencia do criador):</p>
+<table>
+<tr><th>Campo</th><th>Valor</th></tr>
+<tr><td>URL do Dashboard</td><td><code>https://rcfbeltrame.github.io/registro-consultorias-dashboard/</code></td></tr>
+<tr><td>ID da Base</td><td><code>appio7ZC2rZahAJWl</code></td></tr>
+<tr><td>ID da Tabela</td><td><code>tblYq7mKJNQRaiHA3</code></td></tr>
+<tr><td>View</td><td><code>viwxn35nLyYeQpk89</code> (Registro Claude)</td></tr>
+<tr><td>Campo de Inicio</td><td><code>Data Avaliacao</code></td></tr>
+<tr><td>Campo de Fim</td><td><code>Data Alta Cardiologica</code> (vazio = caso ainda ativo)</td></tr>
+</table>
+</div>
+
+<footer>
+Documento 2 &mdash; Guia para Novos Usuarios &middot; Dashboard de Casos Ativos &middot; Gerado em 07/05/2025<br>
+Link da ferramenta: rcfbeltrame.github.io/registro-consultorias-dashboard/
+</footer>
+</body>
+</html>
