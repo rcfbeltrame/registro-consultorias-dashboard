@@ -9,119 +9,109 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#0d1117;color:#cdd9e5;min-height:100vh}
 #setup{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.setup-box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:520px;width:100%}
+.setup-box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;max-width:540px;width:100%}
 .setup-box h1{color:#58a6ff;font-size:20px;margin-bottom:8px}
 .setup-box p{color:#8b949e;font-size:13px;margin-bottom:20px;line-height:1.5}
-label{display:block;font-size:13px;color:#cdd9e5;margin-bottom:6px}
-input[type=text]{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px;margin-bottom:16px}
+label{display:block;font-size:13px;color:#cdd9e5;margin-bottom:4px;margin-top:12px}
+input[type=text]{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#cdd9e5;font-size:13px}
 input[type=text]:focus{outline:none;border-color:#58a6ff}
-.btn{background:#238636;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;width:100%}
+.btn{background:#238636;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;width:100%;margin-top:20px}
 .btn:hover{background:#2ea043}
-.btn-secondary{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px}
-.btn-secondary:hover{background:#30363d}
-.error{color:#f85149;font-size:13px;margin-top:8px}
-.note{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px;font-size:12px;color:#8b949e;margin-top:16px;line-height:1.6}
-#app{display:none;padding:24px}
+.btn-sm{background:#21262d;color:#cdd9e5;border:1px solid #30363d;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px}
+.btn-sm:hover{background:#30363d}
+.error{color:#f85149;font-size:13px;margin-top:10px;min-height:18px}
+.note{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:12px;font-size:12px;color:#8b949e;margin-top:16px;line-height:1.6}
+#app{display:none;padding:24px;max-width:1200px;margin:0 auto}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .header h1{color:#58a6ff;font-size:18px}
-.header-btns{display:flex;gap:8px}
+.hbtns{display:flex;gap:8px}
 #tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .ytab{padding:7px 16px;border-radius:6px;border:none;cursor:pointer;font-weight:600;font-size:13px;background:#21262d;color:#8b949e;transition:all .15s}
-.ytab.active{background:#1f6feb;color:#fff}
+.ytab.active,.ytab:focus{background:#1f6feb;color:#fff;outline:none}
 .ytab:hover:not(.active){background:#30363d;color:#cdd9e5}
 #modes{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .mmode{padding:6px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;background:#21262d;color:#8b949e;transition:all .15s}
 .mmode.active{background:#1f6feb;color:#fff}
 .mmode:hover:not(.active){background:#30363d}
 #stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 16px;min-width:120px;text-align:center}
-.card-label{font-size:11px;color:#8b949e;margin-bottom:4px}
-.card-val{font-size:26px;font-weight:700}
-.card-sub{font-size:10px;color:#484f58}
-.chart-wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;position:relative;height:400px}
-#loading{display:none;position:fixed;top:20px;right:20px;background:#161b22;border:1px solid #30363d;color:#58a6ff;padding:12px 20px;border-radius:8px;font-size:13px;z-index:9999}
-#errmsg{display:none;background:#161b22;border:1px solid #f85149;color:#f85149;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px}
-.config-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.config-row input{flex:1;min-width:200px}
-.small-label{font-size:11px;color:#8b949e;margin-bottom:4px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 18px;min-width:115px;text-align:center;flex:1}
+.cl{font-size:11px;color:#8b949e;margin-bottom:4px}
+.cv{font-size:26px;font-weight:700}
+.cs{font-size:10px;color:#484f58;margin-top:2px}
+.chart-wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;height:400px;position:relative}
+#toast{display:none;position:fixed;top:20px;right:20px;background:#161b22;border:1px solid #30363d;color:#58a6ff;padding:12px 20px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+#errbar{background:#161b22;border:1px solid #f85149;color:#f85149;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;display:none}
+.row2{display:flex;gap:8px;flex-wrap:wrap}
+.row2 > div{flex:1;min-width:200px}
 </style>
 </head>
 <body>
 
-<div id="loading">⏳ Carregando dados...</div>
+<div id="toast">⏳ Carregando...</div>
 
 <div id="setup">
 <div class="setup-box">
-  <h1>📊 Densidade de Casos Ativos</h1>
+  <h1>📈 Densidade de Casos Ativos</h1>
   <p>Registro Consultorias &mdash; Dashboard de Análise</p>
 
   <label>Personal Access Token do Airtable</label>
-  <input type="text" id="token" placeholder="patXXXXXX.XXXXXXXX" autocomplete="off">
+  <input type="text" id="inp_token" placeholder="patXXXXXX.XXXXXXXXXXXXXXXX" autocomplete="off" spellcheck="false">
 
-  <div class="config-row">
-    <div style="flex:1">
-      <div class="small-label">Base ID</div>
-      <input type="text" id="baseId" value="appio7ZC2rZahAJWl">
-    </div>
-    <div style="flex:1">
-      <div class="small-label">Table ID</div>
-      <input type="text" id="tableId" value="tblYq7mKJNQRaiHA3">
-    </div>
+  <div class="row2" style="margin-top:12px">
+    <div><label>Base ID</label><input type="text" id="inp_base" value="appio7ZC2rZahAJWl"></div>
+    <div><label>Table ID</label><input type="text" id="inp_table" value="tblYq7mKJNQRaiHA3"></div>
   </div>
-
-  <div class="config-row">
-    <div style="flex:1">
-      <div class="small-label">Campo: Data Início (ID)</div>
-      <input type="text" id="fieldStart" value="fldZUVJ76Q95Xu1Fi">
-    </div>
-    <div style="flex:1">
-      <div class="small-label">Campo: Data Fim (ID)</div>
-      <input type="text" id="fieldEnd" value="fldgbvSx7kxfyYyNz">
-    </div>
+  <div class="row2">
+    <div><label>Campo Início (field ID)</label><input type="text" id="inp_fstart" value="fldZUVJ76Q95Xu1Fi"></div>
+    <div><label>Campo Fim (field ID)</label><input type="text" id="inp_fend" value="fldgbvSx7kxfyYyNz"></div>
   </div>
 
   <div id="setupErr" class="error"></div>
-  <br>
-  <button class="btn" onclick="startApp()">Carregar Dados</button>
+  <button class="btn" id="btnLoad">Carregar Dados</button>
 
   <div class="note">
-    🔒 <strong>Privacidade:</strong> o token é salvo apenas no seu navegador (localStorage). Nenhum dado é enviado ao GitHub ou a servidores externos.<br><br>
-    🔁 Clique em <em>Carregar Dados</em> a qualquer momento para atualizar com os dados mais recentes do Airtable.
+    🔒 O token é salvo apenas no seu navegador (localStorage). Nenhum dado de pacientes é enviado ao GitHub ou a servidores externos.<br>
+    🔄 Clique em <em>Atualizar</em> a qualquer momento para buscar os dados mais recentes.
   </div>
 </div>
 </div>
 
 <div id="app">
-<div class="header">
-  <h1>📊 Casos Ativos Simultâneos &mdash; Registro Consultorias</h1>
-  <div class="header-btns">
-    <button class="btn-secondary" onclick="refreshData()">🔁 Atualizar</button>
-    <button class="btn-secondary" onclick="showSetup()">⚙️ Configurações</button>
+  <div class="header">
+    <h1>📈 Casos Ativos Simultâneos &mdash; Registro Consultorias</h1>
+    <div class="hbtns">
+      <button class="btn-sm" id="btnRefresh">🔄 Atualizar</button>
+      <button class="btn-sm" id="btnConfig">⚙️ Configurações</button>
+    </div>
   </div>
-</div>
-
-<div id="errmsg"></div>
-<div id="tabs"></div>
-<div id="modes">
-  <button class="mmode active" data-mode="daily">Diário</button>
-  <button class="mmode" data-mode="weekly">Semanal</button>
-  <button class="mmode" data-mode="monthly_max">Mensal (Máx)</button>
-  <button class="mmode" data-mode="monthly_avg">Mensal (Média)</button>
-  <button class="mmode" data-mode="monthly_med">Mensal (Mediana)</button>
-</div>
-<div id="stats"></div>
-<div class="chart-wrap"><canvas id="myChart"></canvas></div>
+  <div id="errbar"></div>
+  <div id="tabs"></div>
+  <div id="modes">
+    <button class="mmode active" data-mode="daily">Diário</button>
+    <button class="mmode" data-mode="weekly">Semanal</button>
+    <button class="mmode" data-mode="monthly_max">Mensal (Máx)</button>
+    <button class="mmode" data-mode="monthly_avg">Mensal (Média)</button>
+    <button class="mmode" data-mode="monthly_med">Mensal (Mediana)</button>
+  </div>
+  <div id="stats"></div>
+  <div class="chart-wrap"><canvas id="myChart"></canvas></div>
 </div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────────────
-const S = { year: 'total', mode: 'daily' };
+const S = { year:'total', mode:'daily' };
 let DATA = null;
 
-// ── Setup ──────────────────────────────────────────────────────────────────
+// ── Init ─────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('rc_token');
-  if (saved) document.getElementById('token').value = saved;
+  const t = localStorage.getItem('rc_token');
+  if (t) document.getElementById('inp_token').value = t;
+  ['inp_base','inp_table','inp_fstart','inp_fend'].forEach(id => {
+    const v = localStorage.getItem('rc_' + id);
+    if (v) document.getElementById(id).value = v;
+  });
+  document.getElementById('btnLoad').addEventListener('click', startApp);
+  document.getElementById('btnRefresh').addEventListener('click', refreshData);
+  document.getElementById('btnConfig').addEventListener('click', showSetup);
   attachModeListeners();
 });
 
@@ -130,97 +120,104 @@ function showSetup() {
   document.getElementById('app').style.display = 'none';
 }
 
+function getConfig() {
+  return {
+    token:  document.getElementById('inp_token').value.trim(),
+    baseId: document.getElementById('inp_base').value.trim(),
+    tableId:document.getElementById('inp_table').value.trim(),
+    fStart: document.getElementById('inp_fstart').value.trim(),
+    fEnd:   document.getElementById('inp_fend').value.trim()
+  };
+}
+
 async function startApp() {
-  const token   = document.getElementById('token').value.trim();
-  const baseId  = document.getElementById('baseId').value.trim();
-  const tableId = document.getElementById('tableId').value.trim();
-  const fStart  = document.getElementById('fieldStart').value.trim();
-  const fEnd    = document.getElementById('fieldEnd').value.trim();
-
-  if (!token || !baseId || !tableId || !fStart || !fEnd) {
-    document.getElementById('setupErr').textContent = 'Preencha todos os campos.';
-    return;
+  const c = getConfig();
+  const errEl = document.getElementById('setupErr');
+  if (!c.token || !c.baseId || !c.tableId || !c.fStart || !c.fEnd) {
+    errEl.textContent = 'Preencha todos os campos.'; return;
   }
-  localStorage.setItem('rc_token', token);
-  localStorage.setItem('rc_baseId', baseId);
-  localStorage.setItem('rc_tableId', tableId);
-  localStorage.setItem('rc_fieldStart', fStart);
-  localStorage.setItem('rc_fieldEnd', fEnd);
-
-  document.getElementById('setupErr').textContent = '';
-  await loadData(token, baseId, tableId, fStart, fEnd);
+  errEl.textContent = '';
+  localStorage.setItem('rc_token', c.token);
+  localStorage.setItem('rc_inp_base', c.baseId);
+  localStorage.setItem('rc_inp_table', c.tableId);
+  localStorage.setItem('rc_inp_fstart', c.fStart);
+  localStorage.setItem('rc_inp_fend', c.fEnd);
+  await loadData(c);
 }
 
 async function refreshData() {
-  const token   = localStorage.getItem('rc_token');
-  const baseId  = localStorage.getItem('rc_baseId');
-  const tableId = localStorage.getItem('rc_tableId');
-  const fStart  = localStorage.getItem('rc_fieldStart');
-  const fEnd    = localStorage.getItem('rc_fieldEnd');
-  if (!token) { showSetup(); return; }
-  await loadData(token, baseId, tableId, fStart, fEnd);
+  const c = getConfig();
+  if (!c.token) { showSetup(); return; }
+  await loadData(c);
 }
 
-// ── Data loading ───────────────────────────────────────────────────────────
-async function loadData(token, baseId, tableId, fStart, fEnd) {
-  const loading = document.getElementById('loading');
-  const errEl   = document.getElementById('errmsg');
-  loading.style.display = 'block';
-  errEl.style.display = 'none';
+// ── Data loading ──────────────────────────────────────────────────────
+async function loadData(c) {
+  const toast = document.getElementById('toast');
+  const errbar = document.getElementById('errbar');
+  toast.style.display = 'block';
+  toast.textContent = '⏳ Carregando dados do Airtable...';
+  errbar.style.display = 'none';
 
   try {
-    const records = await fetchAllRecords(token, baseId, tableId, fStart, fEnd);
-    DATA = processRecords(records);
-
+    const records = await fetchAll(c);
+    DATA = process(records);
     document.getElementById('setup').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-
     buildTabs();
     buildStats(S.year);
     drawChart();
+    toast.style.display = 'none';
   } catch(e) {
-    errEl.textContent = 'Erro: ' + e.message;
-    errEl.style.display = 'block';
+    toast.style.display = 'none';
+    const msg = 'Erro: ' + e.message;
+    errbar.textContent = msg;
+    errbar.style.display = 'block';
+    document.getElementById('setupErr').textContent = msg;
     document.getElementById('setup').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
-  } finally {
-    loading.style.display = 'none';
   }
 }
 
-async function fetchAllRecords(token, baseId, tableId, fStart, fEnd) {
-  const today = new Date().toISOString().split('T')[0];
+async function fetchAll(c) {
+  const today = new Date().toISOString().substring(0,10);
   const records = [];
   let offset = null;
+  let page = 0;
 
   do {
-    const params = new URLSearchParams({
-      'fields[]': [fStart, fEnd],
-      pageSize: 100
-    });
-    // Add both fields separately
-    const url = `https://api.airtable.com/v0/${baseId}/${tableId}?` +
-      `fields[]=${fStart}&fields[]=${fEnd}&pageSize=100` +
-      (offset ? `&offset=${offset}` : '');
+    page++;
+    let url = 'https://api.airtable.com/v0/' + c.baseId + '/' + c.tableId
+      + '?fields[]=' + encodeURIComponent(c.fStart)
+      + '&fields[]=' + encodeURIComponent(c.fEnd)
+      + '&pageSize=100';
+    if (offset) url += '&offset=' + encodeURIComponent(offset);
 
     const resp = await fetch(url, {
-      headers: { Authorization: 'Bearer ' + token }
+      headers: { 'Authorization': 'Bearer ' + c.token }
     });
 
     if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error((err.error && err.error.message) || resp.statusText || 'API error ' + resp.status);
+      let errMsg = 'HTTP ' + resp.status;
+      try {
+        const j = await resp.json();
+        if (j.error && j.error.message) errMsg = j.error.message;
+        else if (j.error && j.error.type) errMsg = j.error.type + ': ' + errMsg;
+      } catch(e2) {}
+      throw new Error(errMsg);
     }
 
     const data = await resp.json();
-    for (const r of data.records) {
-      const start = r.fields[fStart];
-      const end   = r.fields[fEnd] || today;
-      if (!start) continue;
-      const s = (typeof start === 'string' ? start : start.split('T')[0]).substring(0,10);
-      const e = (typeof end   === 'string' ? end   : end.split('T')[0]).substring(0,10);
+
+    for (const r of (data.records || [])) {
+      const sf = r.fields[c.fStart];
+      const ef = r.fields[c.fEnd];
+      if (!sf) continue;
+      const s = String(sf).substring(0,10);
+      const e = ef ? String(ef).substring(0,10) : today;
       if (s <= e) records.push({ start: s, end: e });
     }
+
     offset = data.offset || null;
   } while (offset);
 
@@ -228,141 +225,126 @@ async function fetchAllRecords(token, baseId, tableId, fStart, fEnd) {
   return records;
 }
 
-// ── Data processing ────────────────────────────────────────────────────────
-function processRecords(records) {
-  const today = new Date().toISOString().split('T')[0];
-  let minDate = records[0].start, maxDate = records[0].end;
-  for (const r of records) {
-    if (r.start < minDate) minDate = r.start;
-    if (r.end > maxDate) maxDate = r.end;
-  }
-  if (maxDate > today) maxDate = today;
+// ── Processing ─────────────────────────────────────────────────────────
+function process(records) {
+  const today = new Date().toISOString().substring(0,10);
+  let minD = records[0].start, maxD = records[0].end;
+  records.forEach(r => {
+    if (r.start < minD) minD = r.start;
+    if (r.end > maxD) maxD = r.end;
+  });
+  if (maxD > today) maxD = today;
 
   const days = [];
-  const cur = new Date(minDate + 'T12:00:00Z');
-  const last = new Date(maxDate + 'T12:00:00Z');
-  while (cur <= last) { days.push(cur.toISOString().substring(0,10)); cur.setUTCDate(cur.getUTCDate()+1); }
+  const d = new Date(minD + 'T12:00:00Z');
+  const last = new Date(maxD + 'T12:00:00Z');
+  while (d <= last) { days.push(d.toISOString().substring(0,10)); d.setUTCDate(d.getUTCDate()+1); }
 
   const counts = new Array(days.length).fill(0);
-  for (const r of records) {
-    const si = days.indexOf(r.start), ei = days.indexOf(r.end);
-    if (si < 0 || ei < 0) continue;
+  const dayIdx = {};
+  days.forEach((day, i) => { dayIdx[day] = i; });
+
+  records.forEach(r => {
+    const si = dayIdx[r.start];
+    const ei = dayIdx[r.end];
+    if (si === undefined || ei === undefined) return;
     for (let i = si; i <= ei; i++) counts[i]++;
-  }
+  });
 
-  function median(arr) {
+  function med(arr) {
     if (!arr.length) return 0;
-    const s = [...arr].sort((a,b)=>a-b), m = Math.floor(s.length/2);
-    return s.length%2===0 ? Math.round((s[m-1]+s[m])/2*10)/10 : s[m];
+    const s = [...arr].sort((a,b) => a-b), m = Math.floor(s.length/2);
+    return s.length%2 === 0 ? Math.round((s[m-1]+s[m])/2*10)/10 : s[m];
   }
 
-  function buildAggs(ds, cs) {
+  function agg(ds, cs) {
     const wL=[], wM=[];
     for (let i=0; i<ds.length; i+=7) { wL.push(ds[i]); wM.push(Math.max(...cs.slice(i,i+7))); }
     const mm={};
-    for (let i=0; i<ds.length; i++) { const k=ds[i].substring(0,7); if(!mm[k]) mm[k]=[]; mm[k].push(cs[i]); }
+    ds.forEach((d,i) => { const k=d.substring(0,7); if(!mm[k]) mm[k]=[]; mm[k].push(cs[i]); });
     const mL=Object.keys(mm).sort();
-    return {
-      weeklyLabels:wL, weeklyMax:wM, monthlyLabels:mL,
-      monthlyMax:mL.map(m=>Math.max(...mm[m])),
-      monthlyAvg:mL.map(m=>Math.round(mm[m].reduce((a,b)=>a+b,0)/mm[m].length*10)/10),
-      monthlyMedian:mL.map(m=>median(mm[m]))
-    };
+    return { wL, wM, mL, mMax:mL.map(k=>Math.max(...mm[k])), mAvg:mL.map(k=>Math.round(mm[k].reduce((a,b)=>a+b,0)/mm[k].length*10)/10), mMed:mL.map(k=>med(mm[k])) };
   }
 
-  const globalAgg = buildAggs(days, counts);
-  const gMax = Math.max(...counts), gAvg = Math.round(counts.reduce((a,b)=>a+b,0)/counts.length*10)/10, gMed = median(counts);
-
+  const ga = agg(days, counts);
   const years = [...new Set(days.map(d=>d.substring(0,4)))].sort();
-  const yearData = {};
-  for (const yr of years) {
-    const idx = days.map((d,i)=>d.startsWith(yr)?i:-1).filter(i=>i>=0);
-    if (!idx.length) continue;
-    const yD=idx.map(i=>days[i]), yC=idx.map(i=>counts[i]);
-    const yAgg = buildAggs(yD, yC);
-    const yRecs = records.filter(r=>r.start.startsWith(yr)||r.end.startsWith(yr)||(r.start<yr+'-01-01'&&r.end>yr+'-12-31')).length;
-    yearData[yr] = { labels:yD, dailyCounts:yC, ...yAgg,
-      maxVal:Math.max(...yC), avgVal:Math.round(yC.reduce((a,b)=>a+b,0)/yC.length*10)/10,
-      medianVal:median(yC), totalDays:yD.length, activeRecords:yRecs };
-  }
+  const yd = {};
 
-  return { days, counts, ...globalAgg, gMax, gAvg, gMed, totalDays:days.length, totalRecords:records.length, yearData, years };
+  years.forEach(yr => {
+    const idx = days.map((d,i)=>d.startsWith(yr)?i:-1).filter(i=>i>=0);
+    if (!idx.length) return;
+    const yDs = idx.map(i=>days[i]), yCs = idx.map(i=>counts[i]);
+    const ya = agg(yDs, yCs);
+    const yRec = records.filter(r => r.start.substring(0,4)===yr || r.end.substring(0,4)===yr || (r.start<yr+'-01-01'&&r.end>yr+'-12-31')).length;
+    yd[yr] = { labels:yDs, dc:yCs, ...ya, mx:Math.max(...yCs), avg:Math.round(yCs.reduce((a,b)=>a+b,0)/yCs.length*10)/10, med:med(yCs), days:yDs.length, recs:yRec };
+  });
+
+  return { days, counts, ...ga, gMx:Math.max(...counts), gAvg:Math.round(counts.reduce((a,b)=>a+b,0)/counts.length*10)/10, gMed:med(counts), totalDays:days.length, totalRecs:records.length, years, yd };
 }
 
-// ── UI ─────────────────────────────────────────────────────────────────────
+// ── UI ─────────────────────────────────────────────────────────────────
 function buildTabs() {
   const el = document.getElementById('tabs');
   el.innerHTML = '';
-  const years = DATA.years;
-  [...years, 'total'].forEach(yr => {
-    const btn = document.createElement('button');
-    btn.className = 'ytab' + (yr === S.year ? ' active' : '');
-    btn.dataset.year = yr;
-    btn.textContent = yr === 'total' ? 'Período Total' : yr;
-    btn.addEventListener('click', function() {
+  [...DATA.years, 'total'].forEach(yr => {
+    const b = document.createElement('button');
+    b.className = 'ytab' + (yr===S.year?' active':'');
+    b.dataset.year = yr;
+    b.textContent = yr==='total' ? 'Período Total' : yr;
+    b.addEventListener('click', function() {
       S.year = this.dataset.year;
-      document.querySelectorAll('.ytab').forEach(b=>b.classList.remove('active'));
+      el.querySelectorAll('.ytab').forEach(x=>x.classList.remove('active'));
       this.classList.add('active');
       buildStats(S.year);
       drawChart();
     });
-    el.appendChild(btn);
+    el.appendChild(b);
   });
 }
 
 function attachModeListeners() {
-  document.querySelectorAll('.mmode').forEach(btn => {
-    btn.addEventListener('click', function() {
+  document.querySelectorAll('.mmode').forEach(b => {
+    b.addEventListener('click', function() {
       S.mode = this.dataset.mode;
-      document.querySelectorAll('.mmode').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.mmode').forEach(x=>x.classList.remove('active'));
       this.classList.add('active');
-      drawChart();
+      if (DATA) drawChart();
     });
   });
 }
 
 function buildStats(yr) {
   const el = document.getElementById('stats');
-  let max, avg, med, recs, dys, recsLabel;
-  if (yr === 'total') {
-    max=DATA.gMax; avg=DATA.gAvg; med=DATA.gMed; recs=DATA.totalRecords; dys=DATA.totalDays; recsLabel='Total Registros';
-  } else {
-    const d=DATA.yearData[yr];
-    max=d.maxVal; avg=d.avgVal; med=d.medianVal; recs=d.activeRecords; dys=d.totalDays; recsLabel='Registros Ativos';
-  }
-  const card = (label,val,color,sub) =>
-    `<div class="card"><div class="card-label">${label}</div><div class="card-val" style="color:${color}">${val}</div><div class="card-sub">${sub}</div></div>`;
-  el.innerHTML =
-    card('Pico Máximo', max, '#ff5722', 'casos/dia') +
-    card('Média Diária', avg, '#388bfd', 'casos/dia') +
-    card('Mediana Diária', med, '#e91e63', 'casos/dia') +
-    card(recsLabel, recs, '#3fb950', 'no período') +
-    card('Dias Analisados', dys, '#bc8cff', 'dias');
+  let mx,avg,med,recs,dys,rl;
+  if (yr==='total') { mx=DATA.gMx; avg=DATA.gAvg; med=DATA.gMed; recs=DATA.totalRecs; dys=DATA.totalDays; rl='Total Registros'; }
+  else { const d=DATA.yd[yr]; mx=d.mx; avg=d.avg; med=d.med; recs=d.recs; dys=d.days; rl='Registros Ativos'; }
+  const c=(l,v,col,s)=>'<div class="card"><div class="cl">'+l+'</div><div class="cv" style="color:'+col+'">'+v+'</div><div class="cs">'+s+'</div></div>';
+  el.innerHTML = c('Pico Máximo',mx,'#ff5722','casos/dia')+c('Média Diária',avg,'#388bfd','casos/dia')+c('Mediana Diária',med,'#e91e63','casos/dia')+c(rl,recs,'#3fb950','no período')+c('Dias Analisados',dys,'#bc8cff','dias');
 }
 
 function drawChart() {
   if (!DATA) return;
   const yr=S.year, mode=S.mode;
-  let labels, chartData, label, color;
-  const d = yr==='total' ? null : DATA.yearData[yr];
-  const src = d || DATA;
-  const dSrc = { daily:{l:d?d.labels:DATA.days,d:d?d.dailyCounts:DATA.counts,lbl:'Casos ativos por dia',c:'rgba(56,139,253,0.8)'},
-    weekly:{l:d?d.weeklyLabels:DATA.weeklyLabels,d:d?d.weeklyMax:DATA.weeklyMax,lbl:'Máx semanal',c:'rgba(0,188,212,0.8)'},
-    monthly_max:{l:d?d.monthlyLabels:DATA.monthlyLabels,d:d?d.monthlyMax:DATA.monthlyMax,lbl:'Máx mensal',c:'rgba(255,87,34,0.8)'},
-    monthly_avg:{l:d?d.monthlyLabels:DATA.monthlyLabels,d:d?d.monthlyAvg:DATA.monthlyAvg,lbl:'Média mensal',c:'rgba(76,175,80,0.8)'},
-    monthly_med:{l:d?d.monthlyLabels:DATA.monthlyLabels,d:d?d.monthlyMedian:DATA.monthlyMedian,lbl:'Mediana mensal',c:'rgba(233,30,99,0.8)'}
+  const d = yr==='total' ? null : DATA.yd[yr];
+  const src = {
+    daily:      { l:d?d.labels:DATA.days,  v:d?d.dc:DATA.counts,  lbl:'Casos ativos por dia', col:'rgba(56,139,253,0.8)' },
+    weekly:     { l:d?d.wL:DATA.wL,        v:d?d.wM:DATA.wM,      lbl:'Máx semanal',      col:'rgba(0,188,212,0.8)' },
+    monthly_max:{ l:d?d.mL:DATA.mL,        v:d?d.mMax:DATA.mMax,  lbl:'Máx mensal',        col:'rgba(255,87,34,0.8)' },
+    monthly_avg:{ l:d?d.mL:DATA.mL,        v:d?d.mAvg:DATA.mAvg,  lbl:'Média mensal',      col:'rgba(76,175,80,0.8)' },
+    monthly_med:{ l:d?d.mL:DATA.mL,        v:d?d.mMed:DATA.mMed,  lbl:'Mediana mensal',       col:'rgba(233,30,99,0.8)' }
   }[mode];
 
-  const existing = Chart.getChart('myChart');
-  if (existing) existing.destroy();
+  const ex = Chart.getChart('myChart');
+  if (ex) ex.destroy();
+
   new Chart(document.getElementById('myChart'), {
     type:'bar',
-    data:{ labels:dSrc.l, datasets:[{ label:dSrc.lbl, data:dSrc.d, backgroundColor:dSrc.c, borderRadius:3, borderSkipped:false }] },
+    data:{ labels:src.l, datasets:[{ label:src.lbl, data:src.v, backgroundColor:src.col, borderRadius:3, borderSkipped:false }] },
     options:{
       responsive:true, maintainAspectRatio:false, animation:false,
       plugins:{ legend:{ labels:{ color:'#cdd9e5', font:{ size:11 } } } },
       scales:{
-        x:{ ticks:{ color:'#8b949e', font:{ size:9 }, maxRotation:45, maxTicksLimit:mode==='daily'?30:20 }, grid:{ color:'#21262d' } },
+        x:{ ticks:{ color:'#8b949e', font:{ size:9 }, maxRotation:45, maxTicksLimit: mode==='daily'?30:20 }, grid:{ color:'#21262d' } },
         y:{ min:0, ticks:{ color:'#8b949e', font:{ size:10 } }, grid:{ color:'#21262d' } }
       }
     }
