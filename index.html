@@ -10,15 +10,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Inter",system-ui,sans-serif;background:#f5f4f0;color:#1a1a2e;min-height:100vh}
-
-/* Setup page */
 #pg-cfg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#f5f4f0 0%,#eeeae4 100%)}
 .cfg-card{background:#fff;border-radius:20px;padding:40px 44px;max-width:580px;width:100%;box-shadow:0 4px 6px -1px rgba(0,0,0,.06),0 10px 40px -8px rgba(0,0,0,.10)}
 .cfg-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cfg-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .cfg-title{font-size:22px;font-weight:700;color:#0f172a;letter-spacing:-.4px}
 .cfg-sub{font-size:13px;color:#64748b;margin-bottom:28px;line-height:1.5}
-
 fieldset{border:none;padding:0;margin-bottom:20px}
 legend{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
 .field-group{display:flex;flex-direction:column;gap:10px}
@@ -28,16 +25,12 @@ label{font-size:12px;font-weight:500;color:#475569}
 input{padding:9px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:13px;color:#0f172a;background:#f8fafc;transition:border-color .15s,box-shadow .15s;outline:none}
 input:focus{border-color:#4f46e5;background:#fff;box-shadow:0 0 0 3px rgba(79,70,229,.10)}
 input::placeholder{color:#cbd5e1}
-
 .btn-load{width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.1px;transition:opacity .15s,transform .1s;box-shadow:0 4px 14px rgba(79,70,229,.30)}
 .btn-load:hover{opacity:.92;transform:translateY(-1px)}
 .btn-load:active{transform:translateY(0)}
-
 .cfg-err{font-size:13px;color:#dc2626;margin-top:10px;padding:10px 14px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;display:none}
 .cfg-note{font-size:12px;color:#94a3b8;margin-top:18px;padding:12px 16px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;line-height:1.7}
 .cfg-note strong{color:#64748b}
-
-/* App page */
 #pg-app{display:none;min-height:100vh;background:#f5f4f0}
 .app-topbar{background:#fff;border-bottom:1px solid #e8e5df;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .app-brand{display:flex;align-items:center;gap:10px}
@@ -46,19 +39,13 @@ input::placeholder{color:#cbd5e1}
 .app-brand-sep{color:#e2e8f0;margin:0 4px}
 .app-brand-sub{font-size:13px;color:#94a3b8;font-weight:400}
 .app-actions{display:flex;gap:8px}
-
 .btn-ghost{background:transparent;color:#64748b;border:1.5px solid #e2e8f0;padding:6px 14px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
 .btn-ghost:hover{background:#f1f5f9;border-color:#cbd5e1;color:#0f172a}
-
 .app-body{padding:28px 32px;max-width:1440px;margin:0 auto}
-
-/* Tabs */
 .tabs-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap}
 .tab{background:transparent;color:#64748b;border:1.5px solid #e2e8f0;padding:6px 16px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
 .tab:hover{background:#f1f5f9;color:#334155}
 .tab.active{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:0 2px 8px rgba(79,70,229,.25)}
-
-/* Stats */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}
 .stat-card{background:#fff;border-radius:16px;padding:20px 22px;border:1px solid #f0ede8;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .stat-card-inner{display:flex;flex-direction:column;gap:4px}
@@ -66,13 +53,11 @@ input::placeholder{color:#cbd5e1}
 .stat-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
 .stat-lbl{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;margin-top:4px}
 .stat-unit{font-size:11px;color:#cbd5e1;margin-top:2px}
-
-/* Chart */
 .chart-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #f0ede8;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:8px}
 .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .chart-title{font-size:13px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.6px}
-
-/* Section label */
+.btn-download{background:#f8fafc;color:#64748b;border:1.5px solid #e2e8f0;padding:6px 14px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.btn-download:hover{background:#f1f5f9;border-color:#cbd5e1;color:#0f172a}
 .section-label{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;margin-top:4px}
 </style>
 </head>
@@ -85,14 +70,10 @@ input::placeholder{color:#cbd5e1}
       <div class="cfg-title">Densidade de Casos Ativos</div>
     </div>
     <p class="cfg-sub">Configure o acesso ao Airtable para gerar a an&aacute;lise de densidade</p>
-
     <fieldset>
       <legend>Acesso</legend>
       <div class="field-group">
-        <div class="field">
-          <label>Personal Access Token</label>
-          <input type="password" id="fToken" placeholder="patXXXXXX...">
-        </div>
+        <div class="field"><label>Personal Access Token</label><input type="password" id="fToken" placeholder="patXXXXXX..."></div>
         <div class="field-row">
           <div class="field"><label>Base ID</label><input type="text" id="fBase" placeholder="appXXXXXX"></div>
           <div class="field"><label>Table ID</label><input type="text" id="fTable" placeholder="tblXXXXXX"></div>
@@ -100,7 +81,6 @@ input::placeholder{color:#cbd5e1}
         <div class="field"><label>View ID <span style="color:#cbd5e1">(opcional)</span></label><input type="text" id="fView" placeholder="viwXXXXXX"></div>
       </div>
     </fieldset>
-
     <fieldset>
       <legend>Campos de Data</legend>
       <div class="field-row">
@@ -108,10 +88,8 @@ input::placeholder{color:#cbd5e1}
         <div class="field"><label>Data Fim (encerramento)</label><input type="text" id="fEnd" placeholder="Data Alta Cardiol&oacute;gica"></div>
       </div>
     </fieldset>
-
     <div id="cfgErr" class="cfg-err"></div>
     <button class="btn-load" id="btnLoad">Carregar Dados</button>
-
     <p class="cfg-note">&#x1F512; <strong>Privacidade:</strong> o token fica salvo apenas neste navegador (localStorage). Nenhum dado de pacientes &eacute; transmitido ao GitHub.</p>
   </div>
 </div>
@@ -129,7 +107,6 @@ input::placeholder{color:#cbd5e1}
       <button class="btn-ghost" id="btnConfig">&#x2699; Configurar</button>
     </div>
   </div>
-
   <div class="app-body">
     <div class="section-label">Per&iacute;odo</div>
     <div class="tabs-row" id="yearTabs"></div>
@@ -138,7 +115,8 @@ input::placeholder{color:#cbd5e1}
     <div class="stats-grid" id="statsGrid"></div>
     <div class="chart-card">
       <div class="chart-header">
-        <span class="chart-title" id="chartTitle">Casos ativos por dia</span>
+        <span class="chart-title" id="chartTitle">Casos ativos</span>
+        <button class="btn-download" id="btnDownload">&#x2B07; Baixar gr&aacute;fico</button>
       </div>
       <canvas id="myChart" height="80"></canvas>
     </div>
@@ -175,11 +153,7 @@ var STAT_COLORS = [
 ];
 
 function $(id){ return document.getElementById(id); }
-
-function showErr(id,msg){
-  var el=$(id); if(!el)return;
-  el.textContent=msg; el.style.display=msg?"block":"none";
-}
+function showErr(id,msg){ var el=$(id); if(!el)return; el.textContent=msg; el.style.display=msg?"block":"none"; }
 
 function startLoad(){
   var t=$("fToken").value.trim(), b=$("fBase").value.trim();
@@ -201,20 +175,13 @@ function fetchPage(acc,offset){
   fetch(url,{headers:{Authorization:"Bearer "+CFG.token}})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.error){
-        showErr("cfgErr","Erro da API: "+d.error.message);
-        $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
-        return;
-      }
+      if(d.error){ showErr("cfgErr","Erro da API: "+d.error.message); $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false; return; }
       var recs=d.records||[];
       for(var i=0;i<recs.length;i++) acc.push(recs[i]);
       if(d.offset) fetchPage(acc,d.offset);
       else buildDashboard(acc);
     })
-    .catch(function(e){
-      showErr("cfgErr","Erro de rede: "+e.message);
-      $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
-    });
+    .catch(function(e){ showErr("cfgErr","Erro de rede: "+e.message); $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false; });
 }
 
 function buildDashboard(recs){
@@ -231,25 +198,15 @@ function buildDashboard(recs){
     if(ed<sd) ed=new Date(sd);
     valid++;
     var cur=new Date(sd);
-    while(cur<=ed){
-      var k=cur.toISOString().slice(0,10);
-      daily[k]=(daily[k]||0)+1;
-      cur.setDate(cur.getDate()+1);
-    }
+    while(cur<=ed){ var k=cur.toISOString().slice(0,10); daily[k]=(daily[k]||0)+1; cur.setDate(cur.getDate()+1); }
   }
-  if(!valid){
-    showErr("cfgErr","Nenhum registro válido. Verifique os nomes dos campos.");
-    $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
-    return;
-  }
+  if(!valid){ showErr("cfgErr","Nenhum registro válido. Verifique os nomes dos campos."); $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false; return; }
   DAILY=daily;
-  var ySet={};
-  Object.keys(daily).forEach(function(k){ySet[k.slice(0,4)]=1;});
+  var ySet={}; Object.keys(daily).forEach(function(k){ySet[k.slice(0,4)]=1;});
   YEARS=Object.keys(ySet).sort();
   CUR_YEAR="total"; CUR_VIEW="diario";
   $("appSub").textContent=valid+" registros · "+Object.keys(daily).length+" dias";
-  $("pg-cfg").style.display="none";
-  $("pg-app").style.display="block";
+  $("pg-cfg").style.display="none"; $("pg-app").style.display="block";
   $("btnLoad").textContent="Carregar Dados"; $("btnLoad").disabled=false;
   renderAll();
 }
@@ -261,8 +218,7 @@ function renderYearTabs(){
   for(var i=0;i<YEARS.length;i++) tabs.push({id:YEARS[i],lbl:YEARS[i]});
   var html="";
   for(var j=0;j<tabs.length;j++){
-    var t=tabs[j];
-    html+='<button class="tab'+(t.id===CUR_YEAR?" active":"")+'" data-year="'+t.id+'">'+t.lbl+'</button>';
+    var t=tabs[j]; html+='<button class="tab'+(t.id===CUR_YEAR?" active":"")+'" data-year="'+t.id+'">'+t.lbl+'</button>';
   }
   $("yearTabs").innerHTML=html;
   var btns=$("yearTabs").querySelectorAll(".tab");
@@ -272,8 +228,7 @@ function renderYearTabs(){
 function renderViewTabs(){
   var html="";
   for(var i=0;i<VIEWS.length;i++){
-    var v=VIEWS[i];
-    html+='<button class="tab'+(v.id===CUR_VIEW?" active":"")+'" data-view="'+v.id+'">'+v.lbl+'</button>';
+    var v=VIEWS[i]; html+='<button class="tab'+(v.id===CUR_VIEW?" active":"")+'" data-view="'+v.id+'">'+v.lbl+'</button>';
   }
   $("viewTabs").innerHTML=html;
   var btns=$("viewTabs").querySelectorAll(".tab");
@@ -285,15 +240,33 @@ function onViewClick(){ CUR_VIEW=this.getAttribute("data-view"); renderAll(); }
 
 function getFiltered(){
   if(CUR_YEAR==="total") return DAILY;
-  var r={};
-  Object.keys(DAILY).forEach(function(k){if(k.slice(0,4)===CUR_YEAR)r[k]=DAILY[k];});
-  return r;
+  var r={}; Object.keys(DAILY).forEach(function(k){if(k.slice(0,4)===CUR_YEAR)r[k]=DAILY[k];}); return r;
+}
+
+/* Rolling average smoothing for daily view */
+function rollingAvg(keys, dm, window){
+  var half=Math.floor(window/2);
+  return keys.map(function(k,i){
+    var sum=0, count=0;
+    for(var j=Math.max(0,i-half); j<=Math.min(keys.length-1,i+half); j++){
+      sum+=dm[keys[j]]; count++;
+    }
+    return Math.round(sum/count*10)/10;
+  });
 }
 
 function buildChartData(dm){
   var keys=Object.keys(dm).sort();
   if(!keys.length) return {labels:[],data:[],legend:""};
-  if(CUR_VIEW==="diario") return {labels:keys,data:keys.map(function(k){return dm[k];}),legend:"Casos ativos por dia",type:"bar"};
+
+  /* --- Diario: smoothed with 14-day rolling average --- */
+  if(CUR_VIEW==="diario"){
+    var raw=keys.map(function(k){return dm[k];});
+    var smoothed=rollingAvg(keys,dm,14);
+    return {labels:keys, data:smoothed, rawData:raw, legend:"Média móvel 14 dias (Diário)"};
+  }
+
+  /* --- Semanal --- */
   if(CUR_VIEW==="semanal"){
     var wk={};
     keys.forEach(function(k){
@@ -304,15 +277,22 @@ function buildChartData(dm){
       wk[wkey].push(dm[k]);
     });
     var wkeys=Object.keys(wk).sort();
-    return {labels:wkeys,data:wkeys.map(function(k){return Math.max.apply(null,wk[k]);}),legend:"Máximo semanal",type:"bar"};
+    return {labels:wkeys, data:wkeys.map(function(k){return Math.max.apply(null,wk[k]);}), legend:"Máximo semanal"};
   }
+
+  /* --- Mensal --- */
   var mo={};
   keys.forEach(function(k){var mk=k.slice(0,7);if(!mo[mk])mo[mk]=[];mo[mk].push(dm[k]);});
   var mkeys=Object.keys(mo).sort();
-  if(CUR_VIEW==="mensal-max") return {labels:mkeys,data:mkeys.map(function(k){return Math.max.apply(null,mo[k]);}),legend:"Máximo mensal",type:"bar"};
-  if(CUR_VIEW==="mensal-avg") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k];return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length*10)/10;}),legend:"Média mensal",type:"line"};
-  if(CUR_VIEW==="mensal-mdn") return {labels:mkeys,data:mkeys.map(function(k){var a=mo[k].slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;}),legend:"Mediana mensal",type:"line"};
-  return {labels:[],data:[],legend:"",type:"bar"};
+  if(CUR_VIEW==="mensal-max") return {labels:mkeys, data:mkeys.map(function(k){return Math.max.apply(null,mo[k]);}), legend:"Máximo mensal"};
+  if(CUR_VIEW==="mensal-avg") return {labels:mkeys, data:mkeys.map(function(k){
+    var a=mo[k]; return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length*10)/10;
+  }), legend:"Média mensal"};
+  if(CUR_VIEW==="mensal-mdn") return {labels:mkeys, data:mkeys.map(function(k){
+    var a=mo[k].slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);
+    return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;
+  }), legend:"Mediana mensal"};
+  return {labels:[],data:[],legend:""};
 }
 
 function mdn(arr){var a=arr.slice().sort(function(x,y){return x-y;}),mid=Math.floor(a.length/2);return a.length%2?a[mid]:Math.round((a[mid-1]+a[mid])/2*10)/10;}
@@ -320,17 +300,17 @@ function mdn(arr){var a=arr.slice().sort(function(x,y){return x-y;}),mid=Math.fl
 function renderChart(){
   var dm=getFiltered();
   var vals=Object.keys(dm).map(function(k){return dm[k];});
-  if(!vals.length){$("statsGrid").innerHTML='<p style="color:#94a3b8;font-size:13px">Sem dados para este período.</p>';return;}
+  if(!vals.length){ $("statsGrid").innerHTML='<p style="color:#94a3b8;font-size:13px">Sem dados para este período.</p>'; return; }
   var today=new Date().toISOString().slice(0,10);
   var mx=Math.max.apply(null,vals);
   var avg=Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length*10)/10;
   var med=mdn(vals);
   var active=dm[today]||0;
-  var statsData = [
-    {val:mx,  lbl:"Pico Máximo",    unit:"casos / dia", c:STAT_COLORS[0]},
-    {val:avg, lbl:"Média Diária",  unit:"casos / dia", c:STAT_COLORS[1]},
-    {val:med, lbl:"Mediana Diária",unit:"casos / dia", c:STAT_COLORS[2]},
-    {val:active,lbl:"Casos Ativos Hoje",unit:"em andamento", c:STAT_COLORS[3]},
+  var statsData=[
+    {val:mx,    lbl:"Pico Máximo",    unit:"casos / dia",   c:STAT_COLORS[0]},
+    {val:avg,   lbl:"Média Diária",  unit:"casos / dia",   c:STAT_COLORS[1]},
+    {val:med,   lbl:"Mediana Diária",unit:"casos / dia",   c:STAT_COLORS[2]},
+    {val:active,lbl:"Casos Ativos Hoje",unit:"em andamento",c:STAT_COLORS[3]},
     {val:vals.length,lbl:"Dias Analisados",unit:"dias no período",c:STAT_COLORS[4]}
   ];
   var html="";
@@ -339,8 +319,7 @@ function renderChart(){
     html+='<div class="stat-card"><div class="stat-card-inner">';
     html+='<div class="stat-dot" style="background:'+s.c.dot+'"></div>';
     html+='<div class="stat-val" style="color:'+s.c.val+'">'+s.val+'</div>';
-    html+='<div class="stat-lbl">'+s.lbl+'</div>';
-    html+='<div class="stat-unit">'+s.unit+'</div>';
+    html+='<div class="stat-lbl">'+s.lbl+'</div><div class="stat-unit">'+s.unit+'</div>';
     html+='</div></div>';
   }
   $("statsGrid").innerHTML=html;
@@ -349,25 +328,26 @@ function renderChart(){
   $("chartTitle").textContent=cd.legend;
   var ctx=$("myChart").getContext("2d");
   if(CHART){CHART.destroy();CHART=null;}
-  var isLine=cd.type==="line";
+
+  /* All views use BAR chart; daily uses smoothed data */
   CHART=new Chart(ctx,{
-    type:cd.type,
+    type:"bar",
     data:{labels:cd.labels,datasets:[{
       label:cd.legend,
       data:cd.data,
-      backgroundColor:isLine?"transparent":"rgba(79,70,229,0.15)",
-      borderColor:"#4f46e5",
-      borderWidth:isLine?2.5:1.5,
-      borderRadius:isLine?0:3,
-      pointRadius:0,
-      tension:0.4,
-      fill:false
+      backgroundColor:"rgba(79,70,229,0.72)",
+      borderColor:"rgba(79,70,229,0.90)",
+      borderWidth:1,
+      borderRadius:2,
+      borderSkipped:false
     }]},
     options:{
       responsive:true,
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:function(ctx){return " "+ctx.parsed.y+" casos";}}}
+        tooltip:{callbacks:{label:function(ctx){
+          return " "+ctx.parsed.y+" casos";
+        }}}
       },
       scales:{
         x:{ticks:{color:"#94a3b8",font:{size:11},maxTicksLimit:18},grid:{color:"#f1f5f9"},border:{color:"#e2e8f0"}},
@@ -375,6 +355,25 @@ function renderChart(){
       }
     }
   });
+}
+
+function downloadChart(){
+  if(!CHART) return;
+  /* Draw on white background for clean PNG */
+  var canvas=$("myChart");
+  var tmp=document.createElement("canvas");
+  tmp.width=canvas.width; tmp.height=canvas.height;
+  var tctx=tmp.getContext("2d");
+  tctx.fillStyle="#ffffff";
+  tctx.fillRect(0,0,tmp.width,tmp.height);
+  tctx.drawImage(canvas,0,0);
+  var title=$("chartTitle").textContent||"grafico";
+  var period=CUR_YEAR==="total"?"periodo-total":CUR_YEAR;
+  var filename="densidade-"+period+"-"+title.replace(/[^a-z0-9]/gi,"-").toLowerCase()+".png";
+  var link=document.createElement("a");
+  link.href=tmp.toDataURL("image/png");
+  link.download=filename;
+  link.click();
 }
 
 (function(){
@@ -386,10 +385,8 @@ function renderChart(){
   $("fEnd").value=LS.load("dash_end","Data Alta Cardiológica");
   $("btnLoad").addEventListener("click",startLoad);
   $("btnRefresh").addEventListener("click",function(){fetchPage([],null);});
-  $("btnConfig").addEventListener("click",function(){
-    $("pg-app").style.display="none";
-    $("pg-cfg").style.display="flex";
-  });
+  $("btnConfig").addEventListener("click",function(){ $("pg-app").style.display="none"; $("pg-cfg").style.display="flex"; });
+  $("btnDownload").addEventListener("click",downloadChart);
 })();
 </script>
 </body>
